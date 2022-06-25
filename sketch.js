@@ -9,7 +9,7 @@ const coordinates = [
 ];
 
 function preload() {
-  img = loadImage("images/UTM Map.png");
+  img = loadImage("images/UTMmap.png");
 }
 
 function setup() {
