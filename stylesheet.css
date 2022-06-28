@@ -34,10 +34,13 @@ body {
     grid-template-rows: 1fr 1fr 1fr;
 }
 h1 {
-    color:#63A375;
+    color:#c21247;
     font-family: pilowlava;
     font-size: 4em;
     text-align: center;
+}
+.logo{
+    height: 100px;
 }
 canvas {
     border: 10px dashed hsl(21, 21%, 21%);
@@ -56,13 +59,10 @@ ul {
 .Sverre::marker {
     color: blue;
 }
-.Andreas:after {
-    content: "🇨🇭";
-    font-size: 0.75em;
-}
-.Sverre:after {
-    content: "🇳🇱";
-    font-size: 0.75em;
+.flag {
+    height: 0.75em;
+    width: auto;
+    vertical-align: middle;
 }
 output {
     float:right;
@@ -90,11 +90,11 @@ output:last-of-type::after {
     content: ":";
     animation: blinker 1s step-start infinite;
 }
-.cursor-location-parent>p{
+/* .cursor-location-parent>p{
     position: absolute;
     margin-top: 10px;
     margin-left: 10px;
-}
+} */
 footer {
     position: sticky;
     margin-top: -25px;

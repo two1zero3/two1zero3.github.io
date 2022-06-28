@@ -1,6 +1,6 @@
 const cursorTag = document.querySelector("div.cursors");
 const ball = cursorTag.querySelector("div");
-const locationIndicator = document.querySelector(".cursor-location-parent>p");
+// const locationIndicator = document.querySelector(".cursor-location-parent>p");
 
 
 let aimX = 0;
@@ -19,7 +19,7 @@ const animate = function () {
     ball.style.left = currentX + "px";
     ball.style.top = currentY + "px";
 
-    locationIndicator.innerHTML = aimX + " px, " + aimY + " px"
+    // locationIndicator.innerHTML = aimX + " px, " + aimY + " px"
 
     requestAnimationFrame(animate);
 }
