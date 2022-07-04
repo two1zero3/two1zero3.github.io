@@ -47,6 +47,7 @@ img {width: 100%;}
     position: relative;
     margin:3vw;
     font-family: "Syne";
+    transform-style: preserve-3d;
 
 }
 .item:hover .thumbnail {
@@ -57,6 +58,7 @@ img {width: 100%;}
     width: 20vw;
     transform: translateZ(-10vw)translateX(10vw);
     image-rendering: pixelated;
+    transform-style: preserve-3d;
 }
 .title {
     width: 90%;
@@ -67,10 +69,12 @@ img {width: 100%;}
     transform-origin: 50% 100%;
     border: 1px solid black;
     transform: rotateX(10deg) translateZ(-1vw);
+    transform-style: preserve-3d;
 }
 a {
     text-decoration: none;
     color:black;
+    transform-style: preserve-3d;
 }
 .description {
     background-color: white;
@@ -80,6 +84,7 @@ a {
     margin: 1vw;
     padding: 20px;
     border: 1px solid black;
+    transform-style: preserve-3d;
 }
 .item::before {
     content: '';
@@ -92,11 +97,13 @@ a {
     border: 1px solid black;
     transform-origin: 50% 100%;
     transform: rotateX(90deg);
+    transform-style: preserve-3d;
 }
 .logo-container {
     text-align: center;
     grid-column-start: 1;
     grid-column-end: 3;
+    transform-style: preserve-3d;
 }
 .logo-container > * {
     font-family: "pilowlava";
@@ -105,10 +112,12 @@ a {
     pointer-events: none;
     transform: translateZ(-5vw);
     background: linear-gradient(90deg, rgba(179,18,237,0.5) 0%, rgba(202,242,9,0.5) 100%);
+    transform-style: preserve-3d;
 }
 .logo-image {
     width: var(--logo-size);
     border: none;
+    transform-style: preserve-3d;
 }
 @media only screen and (max-width: 700px) { /* { fix making a 1 lane layout for mobile and small screens */
     
