@@ -31,7 +31,7 @@ html,body {
 .section-wrapper {
     display: grid;
     column-gap: var(--grid-gap);
-    row-gap:  var(--grid-gap);
+    row-gap:  calc(10vw + var(--grid-gap));
     grid-template-columns: 1fr 1fr;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -56,7 +56,7 @@ html,body {
     transition: all 2s;
     width: 20vw;
     height: 20vw;
-    background-color: black;
+    /* background-color: black; */
     vertical-align: middle;
     transform: translateZ(-10vw)translateX(10vw);
     transform-style: preserve-3d;
@@ -64,7 +64,7 @@ html,body {
 .thumbnail > img {
     max-width: 100%;
     max-height: 100%;
-    position: absolute;  
+    position: absolute;
     top: 0;  
     bottom: 0;  
     left: 0;  
