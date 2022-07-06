@@ -29,7 +29,7 @@
     src: url('fonts/Basalte-Multicolor.woff');
 }
 @font-face {
-    font-family: 'FT88';
+    font-family: 'FT88-School';
     src: url('fonts/FT88-School.woff2');
     src: url('fonts/FT88-School.woff');
 }
@@ -94,7 +94,7 @@ html,body {
     margin: auto;
 }
 .title {
-    font-family: "FT88";
+    font-family: "FT88-School";
     width: 90%;
     padding: 1vw 0;
     margin-left: 5%;
@@ -152,7 +152,7 @@ h2 {
     vertical-align: middle;
     text-align: center;
 }
-.logo-container > * {
+.logo {
     display: inline-block;
     padding: 0 5vw;
     margin: 7vw 0;
@@ -162,6 +162,7 @@ h2 {
     pointer-events: none;
     transform: translateZ(-5vw)rotateZ(5deg)rotateY(-5deg);
     background: linear-gradient(90deg, rgba(179,18,237,0.5) 0%, rgba(202,242,9,0.5) 100%);
+    animation: logo-corners 30s infinite;
     transform-style: preserve-3d;
 }
 .logo-image {
@@ -169,6 +170,13 @@ h2 {
     margin-bottom:-2vw;
     border: none;
     transform-style: preserve-3d;
+}
+@keyframes logo-corners {
+    0% { transform: translateZ(-5vw)rotateX(5deg)rotateY(-5deg) }
+    25% { transform: translateZ(-5vw)rotateX(-5deg)rotateY(5deg) }
+    50% { transform: translateZ(-5vw)rotateX(-5deg)rotateY(-5deg) }
+    75% { transform: translateZ(-5vw)rotateX(5deg)rotateY(5deg) }
+    100% { transform: translateZ(-5vw)rotateX(5deg)rotateY(-5deg) }
 }
 footer {
     position: sticky;
@@ -198,7 +206,7 @@ footer {
         grid-column-start: 1;
         grid-column-end: 2;
     }
-    .logo-container > * {
+    .logo {
         transform: translateZ(-10vw)rotateZ(5deg)rotateY(-5deg);
     }
     h2 {
