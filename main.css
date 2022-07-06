@@ -42,57 +42,43 @@
 *, *:before, *:after {
     margin: 0;
     padding: 0;
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box;
+    box-sizing: border-box;
 }
 html,body {
     width: 100%;
     height: 100%;
 }
 .section-wrapper {
-    display: -ms-grid;
     display: grid;
-    -webkit-column-gap: 0;
-       -moz-column-gap: 0;
-            column-gap: 0;
+    column-gap: 0;
     row-gap:  10vw;
-    -ms-grid-columns: 1fr 0 1fr;
     grid-template-columns: 1fr 1fr;
     overflow-y: scroll;
     overflow-x: hidden;
     width: 100%;
     height: 100%;
-    -webkit-transform-style: preserve-3d;
-            transform-style: preserve-3d;
-    -webkit-perspective: 500px;
-            perspective: 500px;
-    -webkit-perspective-origin: 50% 10%;
-            perspective-origin: 50% 10%;
+    transform-style: preserve-3d;
+    perspective: 500px;
+    perspective-origin: 50% 10%;
 }
 .item {
     position: relative;
     margin:3vw;
     font-family: "Syne";
-    -webkit-transform-style: preserve-3d;
-            transform-style: preserve-3d;
+    transform-style: preserve-3d;
 
 }
 .item:hover .thumbnail {
-    -webkit-transform: translateZ(-1px)translateX(10vw)translateY(1vw);
-            transform: translateZ(-1px)translateX(10vw)translateY(1vw);
+    transform: translateZ(-1px)translateX(10vw)translateY(1vw);
 }
 .thumbnail {
-    -webkit-transition: all 2s;
-    -o-transition: all 2s;
     transition: all 2s;
     width: 20vw;
     height: 20vw;
     /* background-color: black; */
     vertical-align: middle;
-    -webkit-transform: translateZ(-10vw)translateX(10vw);
-            transform: translateZ(-10vw)translateX(10vw);
-    -webkit-transform-style: preserve-3d;
-            transform-style: preserve-3d;
+    transform: translateZ(-10vw)translateX(10vw);
+    transform-style: preserve-3d;
 }
 .thumbnail > img {
     border: 1px solid black;
@@ -113,36 +99,26 @@ html,body {
     margin-left: 5%;
     background-color: var(--title-background-color);
     text-align: center;
-    -webkit-transform-origin: 50% 100%;
-        -ms-transform-origin: 50% 100%;
-            transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
     border: 1px solid black;
-    -webkit-transform: rotateX(10deg) translateZ(-1vw);
-            transform: rotateX(10deg) translateZ(-1vw);
-    -webkit-transform-style: preserve-3d;
-            transform-style: preserve-3d;
+    transform: rotateX(10deg) translateZ(-1vw);
+    transform-style: preserve-3d;
 }
 h2 {
     color: var(--title-text-color);
-    -webkit-animation: color-change 60s infinite;
-            animation: color-change 60s infinite;
+    animation: color-change 60s infinite;
     font-size: 2vw;
     font-weight: normal;
 }
-@-webkit-keyframes color-change {
-    0% { -webkit-filter: hue-rotate(0); filter: hue-rotate(0); }
-    100% { -webkit-filter: hue-rotate(1turn); filter: hue-rotate(1turn);}
-}
 @keyframes color-change {
-    0% { -webkit-filter: hue-rotate(0); filter: hue-rotate(0); }
-    100% { -webkit-filter: hue-rotate(1turn); filter: hue-rotate(1turn);}
+    0% { filter: hue-rotate(0); }
+    100% { filter: hue-rotate(1turn);}
 }
 .section-wrapper > a {
     display: block;
     text-decoration: none;
     color:black;
-    -webkit-transform-style: preserve-3d;
-            transform-style: preserve-3d;
+    transform-style: preserve-3d;
 }
 .description {
     display:inline-block;
@@ -152,8 +128,7 @@ h2 {
     margin: 1vw;
     padding: 1vw;
     border: 1px solid black;
-    -webkit-transform-style: preserve-3d;
-            transform-style: preserve-3d;
+    transform-style: preserve-3d;
 }
 .item::before {
     content: '';
@@ -164,21 +139,14 @@ h2 {
     height: 50%;
     background: var(--shelf-color);
     border: 1px solid black;
-    -webkit-transform-origin: 50% 100%;
-        -ms-transform-origin: 50% 100%;
-            transform-origin: 50% 100%;
-    -webkit-transform: rotateX(90deg)translateY(-1px);
-            transform: rotateX(90deg)translateY(-1px);
-    -webkit-transform-style: preserve-3d;
-            transform-style: preserve-3d;
+    transform-origin: 50% 100%;
+    transform: rotateX(90deg)translateY(-1px);
+    transform-style: preserve-3d;
 }
 .logo-container {
-    -ms-grid-column: 1;
-        grid-column-start: 1;
-    -ms-grid-column-span: 2;
+    grid-column-start: 1;
     grid-column-end: 3;
-    -webkit-transform-style: preserve-3d;
-            transform-style: preserve-3d;
+    transform-style: preserve-3d;
     vertical-align: middle;
     text-align: center;
 }
@@ -190,36 +158,23 @@ h2 {
     font-size: 15vw;
     border: none;
     pointer-events: none;
-    -webkit-transform: translateZ(-5vw)rotateZ(5deg)rotateY(-5deg);
-            transform: translateZ(-5vw)rotateZ(5deg)rotateY(-5deg);
-    background: -webkit-gradient(linear, left top, right top, from(rgba(179,18,237,0.5)), to(rgba(202,242,9,0.5)));
-    background: -o-linear-gradient(left, rgba(179,18,237,0.5) 0%, rgba(202,242,9,0.5) 100%);
+    transform: translateZ(-5vw)rotateZ(5deg)rotateY(-5deg);
     background: linear-gradient(90deg, rgba(179,18,237,0.5) 0%, rgba(202,242,9,0.5) 100%);
-    -webkit-animation: logo-corners 30s infinite;
-            animation: logo-corners 30s infinite;
-    -webkit-transform-style: preserve-3d;
-            transform-style: preserve-3d;
+    animation: logo-corners 30s infinite;
+    transform-style: preserve-3d;
 }
 .logo-image {
     width: 15vw;
     margin-bottom:-2vw;
     border: none;
-    -webkit-transform-style: preserve-3d;
-            transform-style: preserve-3d;
-}
-@-webkit-keyframes logo-corners {
-    0% { -webkit-transform: translateZ(-5vw)rotateX(5deg)rotateY(-5deg); transform: translateZ(-5vw)rotateX(5deg)rotateY(-5deg) }
-    25% { -webkit-transform: translateZ(-5vw)rotateX(-5deg)rotateY(5deg); transform: translateZ(-5vw)rotateX(-5deg)rotateY(5deg) }
-    50% { -webkit-transform: translateZ(-5vw)rotateX(-5deg)rotateY(-5deg); transform: translateZ(-5vw)rotateX(-5deg)rotateY(-5deg) }
-    75% { -webkit-transform: translateZ(-5vw)rotateX(5deg)rotateY(5deg); transform: translateZ(-5vw)rotateX(5deg)rotateY(5deg) }
-    100% { -webkit-transform: translateZ(-5vw)rotateX(5deg)rotateY(-5deg); transform: translateZ(-5vw)rotateX(5deg)rotateY(-5deg) }
+    transform-style: preserve-3d;
 }
 @keyframes logo-corners {
-    0% { -webkit-transform: translateZ(-5vw)rotateX(5deg)rotateY(-5deg); transform: translateZ(-5vw)rotateX(5deg)rotateY(-5deg) }
-    25% { -webkit-transform: translateZ(-5vw)rotateX(-5deg)rotateY(5deg); transform: translateZ(-5vw)rotateX(-5deg)rotateY(5deg) }
-    50% { -webkit-transform: translateZ(-5vw)rotateX(-5deg)rotateY(-5deg); transform: translateZ(-5vw)rotateX(-5deg)rotateY(-5deg) }
-    75% { -webkit-transform: translateZ(-5vw)rotateX(5deg)rotateY(5deg); transform: translateZ(-5vw)rotateX(5deg)rotateY(5deg) }
-    100% { -webkit-transform: translateZ(-5vw)rotateX(5deg)rotateY(-5deg); transform: translateZ(-5vw)rotateX(5deg)rotateY(-5deg) }
+    0% { transform: translateZ(-5vw)rotateX(5deg)rotateY(-5deg) }
+    25% { transform: translateZ(-5vw)rotateX(-5deg)rotateY(5deg) }
+    50% { transform: translateZ(-5vw)rotateX(-5deg)rotateY(-5deg) }
+    75% { transform: translateZ(-5vw)rotateX(5deg)rotateY(5deg) }
+    100% { transform: translateZ(-5vw)rotateX(5deg)rotateY(-5deg) }
 }
 footer {
     position: sticky;
@@ -233,30 +188,24 @@ footer {
 @media only screen and (max-width: 700px) { /* { fix making a 1 lane layout for mobile and small screens */
     
     .thumbnail {
-        -webkit-transform: translateZ(-15vw)translateX(26vw);
-                transform: translateZ(-15vw)translateX(26vw);
+        transform: translateZ(-15vw)translateX(26vw);
         width: 40vw;
         height: 40vw;
         padding-top: 10vw;
         padding-bottom: 10vw;
     }
     .item:hover .thumbnail {
-        -webkit-transform: translateZ(-1px)translateX(26vw);
-                transform: translateZ(-1px)translateX(26vw);
+        transform: translateZ(-1px)translateX(26vw);
     }
     .section-wrapper{
-        -ms-grid-columns: 100%;
         grid-template-columns: 100%;
     }
     .logo-container{
-        -ms-grid-column: 1;
-            grid-column-start: 1;
-        -ms-grid-column-span: 1;
+        grid-column-start: 1;
         grid-column-end: 2;
     }
     .logo {
-        -webkit-transform: translateZ(-10vw)rotateZ(5deg)rotateY(-5deg);
-                transform: translateZ(-10vw)rotateZ(5deg)rotateY(-5deg);
+        transform: translateZ(-10vw)rotateZ(5deg)rotateY(-5deg);
     }
     h2 {
         font-size: 4vw;
