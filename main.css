@@ -139,8 +139,10 @@ h2 {
     padding: 0 5vw;
     margin: 7vw 0;
     font-family: "Pilowlava";
+    color: white;
     font-size: 15vw;
     border: none;
+    border-radius: 25px;
     pointer-events: none;
     transform: translateZ(-5vw)rotateZ(5deg)rotateY(-5deg);
     background: linear-gradient(90deg, rgba(179,18,237,0.5) 0%, rgba(202,242,9,0.5) 100%);
