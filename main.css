@@ -170,6 +170,30 @@ footer {
     font-size: 2vw;
     color: black;
 }
+header {
+    position: absolute;
+    background-color: var(--shelf-color);
+    width: 100vw;
+    z-index: 1;
+}
+.name-container {
+    margin: 1vw;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 2vmax;
+    font-family: "Syne";
+    list-style: square;
+}
+#andreas-nametag::marker {
+    color: red;
+}
+#sverre-nametag::marker {
+    color: blue;
+}
+::-webkit-scrollbar {
+    display: none;
+}
 @media only screen and (max-width: 700px) { /* { fix making a 1 lane layout for mobile and small screens */
     
     .thumbnail {
