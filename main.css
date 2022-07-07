@@ -59,7 +59,6 @@ html,body {
     transition: all 2s;
     width: 20vw;
     height: 20vw;
-    /* background-color: black; */
     vertical-align: middle;
     transform: translateZ(-10vw)translateX(10vw);
     transform-style: preserve-3d;
