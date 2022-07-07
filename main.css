@@ -13,21 +13,6 @@
     font-display: swap;
 }
 @font-face {
-    font-family: 'Latitude';
-    src: url('fonts/Latitude-Regular.woff2');
-    src: url('fonts/Latitude-Regular.woff');
-}
-@font-face {
-    font-family: 'Abordage';
-    src: url('fonts/Abordage-Regular.woff2');
-    src: url('fonts/Abordage-Regular.woff');
-}
-@font-face {
-    font-family: 'Basalte';
-    src: url('fonts/Basalte-Multicolor.woff2');
-    src: url('fonts/Basalte-Multicolor.woff');
-}
-@font-face {
     font-family: 'FT88-School';
     src: url('fonts/FT88-School.woff2');
     src: url('fonts/FT88-School.woff');
