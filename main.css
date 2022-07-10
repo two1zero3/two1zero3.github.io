@@ -194,6 +194,16 @@ header {
 ::-webkit-scrollbar {
     display: none;
 }
+.two1zero3-andreas::before {
+    content:"\1F534 \0020";
+}
+.two1zero3-sverre::before {
+    content:"\1F535 \0020";
+}
+.two1zero3-both::before {
+    content:"\1F534 \0020 \1F535 \0020";
+    color: ;
+}
 @media only screen and (max-width: 700px) { /* { fix making a 1 lane layout for mobile and small screens */
     
     .thumbnail {
