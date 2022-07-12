@@ -183,7 +183,10 @@ header {
     align-items: center;
     font-size: 2vmax;
     font-family: "Syne";
-    list-style: square;
+    list-style: kannada;
+}
+.description > span {
+    font-weight: bold;
 }
 #andreas-nametag::marker {
     color: red;
