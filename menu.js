@@ -1,21 +1,33 @@
-// const headerElement = document.querySelector("header > .name-container");
-// headerElement.innerHTML += "<li style='width:20vw;' onclick='menuClicked(this);'>menu</li>"
-// const menuElement = document.querySelector(".name-container > li:last-child");
-// const menuOptions = ["all", "music", "video", "other"];
-// const allItems = document.querySelectorAll("section > a");
-// let menuIndex = 0;
-// let menuObject = [
-//     [1,4,5,8],
-//     [12,16],
-// ];
+const headerElement = document.querySelector("header > .name-container");
+headerElement.innerHTML += "<li style='width:20vw;' onclick='menuClicked(this);'>menu</li>"
+const menuOptions = ["all", "music", "video", "other"];
+const menuColors = ["red" , "green", "blue", "orange"];
+let menuIndex = 0;
 
-// function menuClicked (e) {
+const allItems = document.querySelectorAll("section > a");
+const musicRecordings = document.querySelectorAll("section > a[itemtype*='MusicRecording']");
+const videoObjects = document.querySelectorAll("section > a[itemtype*='VideoObject']");
+const creativeWorks = document.querySelectorAll("section > a[itemtype*='CreativeWork']");
 
-//     e.innerHTML = menuOptions[menuIndex % menuOptions.length];
-//     menuIndex++;
+let menuArray = [allItems, musicRecordings, videoObjects, creativeWorks];
 
-//     menuObject[menuIndex % menuOptions.length].forEach(element => {
-//         allItems[element].style.display = "none";
-//     })
+console.log(musicRecordings);
 
-// }
+function menuClicked (e) {
+
+    e.innerHTML = menuOptions[menuIndex % menuOptions.length];              //switch inner text on each click of the menu
+
+    menuArray.forEach(element => {                                          //display no objects (to reset)
+        element.forEach(element => {
+            element.style.display = "none";
+        });
+    });
+
+    menuArray[menuIndex % menuOptions.length].forEach(element => {          //display only selection objects
+        element.style.display = "block";
+        e.style.color = menuColors[menuIndex % menuOptions.length];
+    });
+
+    menuIndex++; //incriment for each menu item
+
+}

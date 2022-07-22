@@ -171,6 +171,10 @@ footer {
     color: black;
 }
 header {
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
     position: absolute;
     background-color: var(--shelf-color);
     width: 100vw;
@@ -181,7 +185,7 @@ header {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    font-size: 2vmax;
+    font-size: 3vmax;
     font-family: "Syne";
     list-style: kannada;
 }
