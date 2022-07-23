@@ -137,7 +137,7 @@ h2 {
     display: inline-block;
     padding: 0 5vw;
     margin: 7vw 0;
-    font-family: "Pilowlava";
+    font-family: "Pilowlava", sans-serif;
     color: white;
     font-size: 15vw;
     border: none;
