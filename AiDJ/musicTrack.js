@@ -2,8 +2,8 @@ class MusicTrack {
 
     constructor(trackNumber) {
 
-        this.pg = createGraphics(windowWidth/4, height, WEBGL); //makes a PGraphics buffer 3 times the height of the canvas --> 1200 px
-        this.pg.blendMode(DIFFERENCE);
+        this.pg = createGraphics(windowWidth/4, height); //makes a PGraphics buffer 3 times the height of the canvas --> 1200 px
+        //this.pg.blendMode(MULTIPLY);
         this.offsetX = trackNumber*this.pg.width;
         this.offsetY = 0;
     }
@@ -24,7 +24,7 @@ class MusicTrack {
             this.metronome();
 
             this.pg.push()
-            this.pg.translate(-this.pg.width/2, -this.pg.height/2); //webgl
+            //this.pg.translate(-this.pg.width/2, -this.pg.height/2); //webgl
 
             if(this.peaks && this.ticks) {
                 this.index = round(this.sound.currentTime()*100);

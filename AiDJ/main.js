@@ -13,7 +13,7 @@ var musicTrackL; // the current left track playing --> refer to musicTrack.js co
 var musicTrackR; // the current right track playing --> refer to musicTrack.js constructor
 var audioCtx;  // define AudioContext as 44.1khz --> hardcoded in p5.sound.js to simplify audio processing by Essentia
 
-var input;
+var inputFile;
 var myButton;
 var myButton2;
 
@@ -47,11 +47,11 @@ function setup() {
     myButton2 = new Clickable(200, 100);
     myButton2.text = "Upload";
     myButton.textScaled = true;
-    myButton2.onPress = function () {input.elt.click(); this.textColor = "#0482FF"};
+    myButton2.onPress = function () {inputFile.elt.click(); this.textColor = "#0482FF"};
     myButton2.onHover = function () {this.color = "#FF2D00"};
     myButton2.onOutside = function () {this.color = "#00D8FF"};
 
-    input = createFileInput(handleFile);
+    inputFile = createFileInput(handleFile);
 
     frameRate(240);
 
@@ -113,52 +113,52 @@ function mousePressed() {
 
 function mouseDragged(e) {
 
-    if (musicTrackL.sound) {
+    // if (musicTrackL.sound) {
 
-        drag += e.movementY;
-        if (musicTrackL.sound.isPlaying()) {
-            musicTrackL.sound.rate(0.001);
-        } else {
-            musicTrackL.sound.pause();
-        }
+    //     drag += e.movementY;
+    //     if (musicTrackL.sound.isPlaying()) {
+    //         musicTrackL.sound.rate(0.001);
+    //     } else {
+    //         musicTrackL.sound.pause();
+    //     }
         
-        console.log(drag);
+    //     console.log(drag);
 
-    }
+    // }
 
 }
 
 function mouseReleased() {
 
-    if (musicTrackL.sound) {
-        //drag/100 because 1 second is 100 pixels
-        //if drag and music is playing then jump to position and play
-        //if drag and music not playing then jump to position and play with playback rate 0
-        if ( drag !== 0 && musicTrackL.sound.isPlaying() ) {
+    // if (musicTrackL.sound) {
+    //     //drag/100 because 1 second is 100 pixels
+    //     //if drag and music is playing then jump to position and play
+    //     //if drag and music not playing then jump to position and play with playback rate 0
+    //     if ( drag !== 0 && musicTrackL.sound.isPlaying() ) {
 
-            let time = musicTrackL.sound.currentTime() + drag/100;
-            time = max(time, 0);
-            time = min(time, musicTrackL.sound.duration() - 0.01);
-            console.log(time,  musicTrackL.sound.duration());
+    //         let time = musicTrackL.sound.currentTime() + drag/100;
+    //         time = max(time, 0);
+    //         time = min(time, musicTrackL.sound.duration() - 0.01);
+    //         console.log(time,  musicTrackL.sound.duration());
 
-            musicTrackL.sound.stop();
-            musicTrackL.sound.play(0,1,1, time);
-            console.log("CASE 1");
-        } else if ( drag !== 0 && !musicTrackL.sound.isPlaying() ) {
+    //         musicTrackL.sound.stop();
+    //         musicTrackL.sound.play(0,1,1, time);
+    //         console.log("CASE 1");
+    //     } else if ( drag !== 0 && !musicTrackL.sound.isPlaying() ) {
 
-            let time = musicTrackL.sound.currentTime() + drag/100;
-            time = max(time, 0);
-            time = min(time, musicTrackL.sound.duration() - 0.01);
-            console.log(time,  musicTrackL.sound.duration());
+    //         let time = musicTrackL.sound.currentTime() + drag/100;
+    //         time = max(time, 0);
+    //         time = min(time, musicTrackL.sound.duration() - 0.01);
+    //         console.log(time,  musicTrackL.sound.duration());
 
 
-            musicTrackL.sound.stop();
-            musicTrackL.sound.play(0,0,1, time);
-            console.log("CASE 2");
-        } 
+    //         musicTrackL.sound.stop();
+    //         musicTrackL.sound.play(0,0,1, time);
+    //         console.log("CASE 2");
+    //     } 
 
-        drag = 0; // reset drag
-    }
+    //     drag = 0; // reset drag
+    // }
 }
 
 const closestIndex = (num, arr) => {

@@ -26,9 +26,9 @@ input[type="range"] {
     transform: rotate(270deg); 
 }
 
-input[type="file"] {
+/* input[type="file"] {
     display:none;
-}
+} */
 /* section for the uploadfile button */
 div > label {
     text-align: center;
