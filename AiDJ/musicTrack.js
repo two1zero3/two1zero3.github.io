@@ -2,7 +2,7 @@ class MusicTrack {
 
     constructor(trackNumber) {
 
-        this.pg = createGraphics(windowWidth/4, height); //makes a PGraphics buffer 3 times the height of the canvas --> 1200 px
+        this.pg = createGraphics(200, 400); //makes a PGraphics buffer 3 times the height of the canvas --> 1200 px
         //this.pg.blendMode(MULTIPLY);
         this.offsetX = trackNumber*this.pg.width;
         this.offsetY = 0;

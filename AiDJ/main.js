@@ -15,7 +15,6 @@ var audioCtx;  // define AudioContext as 44.1khz --> hardcoded in p5.sound.js to
 
 var inputFile;
 var myButton;
-var myButton2;
 
 var drag = 0;
 
@@ -27,7 +26,7 @@ function setup() {
 
     pixelDensity(displayDensity());
 
-    canvas = createCanvas(windowWidth/2,400);
+    canvas = createCanvas(windowWidth,windowHeight);
     canvas.parent("#Canvas");
 
     //CREATE LEFT AND RIGHT TRACKS FROM CLASS
@@ -35,21 +34,14 @@ function setup() {
     musicTrackR = new MusicTrack(1);
     canvas.drop( (e) => {musicTrackL.dropHandler(e)} );
 
-    myButton = new Clickable(200,250);
+    myButton = new Clickable(50,450);
     myButton.text = "⏯︎";
     myButton.textScaled = true;
     myButton.cornerRadius = 200;
     myButton.resize(100, 100);
-    myButton.onHover = function () {this.color = "#FF2D00"};
-    myButton.onOutside = function () {this.color = "#00D8FF"};
-    myButton.onPress = playPause;
-
-    myButton2 = new Clickable(200, 100);
-    myButton2.text = "Upload";
-    myButton.textScaled = true;
-    myButton2.onPress = function () {inputFile.elt.click(); this.textColor = "#0482FF"};
-    myButton2.onHover = function () {this.color = "#FF2D00"};
-    myButton2.onOutside = function () {this.color = "#00D8FF"};
+    myButton.onHover = function () {this.color = "lightgray"};
+    myButton.onOutside = function () {this.color = "white"};
+    myButton.onPress = playPause.bind(musicTrackL); //IMPORTANT --> USE BIND FOR COOL OTHER USES
 
     inputFile = createFileInput(handleFile);
 
@@ -58,23 +50,22 @@ function setup() {
 }
 
 function draw() {
-
-    background(127);
+    fill("blue");
+    rect(0,0,400);
 
     // set the sync of the pg buffer position relating to the track play position + metronome tick log console
     musicTrackL.sync();
     musicTrackR.sync();
 
     myButton.draw();
-    myButton2.draw();
 
     push();
 
     stroke(255,0,0);
-    line(0,height/2,width,height/2); //red line in the middle of the screen
+    line(0,200,400,200); //red line in the middle of the screen
 
-    stroke(255,255,255,50);
-    line(width/2, 0, width/2, height);
+    stroke(255,255,255);
+    line(200, 0, 200, 400);
 
     fill(255);
     text(~~frameRate(), 50, 50);
@@ -89,19 +80,21 @@ function handleFile (file) {
 
 function playPause () {
 
-    if(musicTrackL.sound) {
+    if(this.sound) {
 
-        if (musicTrackL.sound.isPlaying() && musicTrackL.sound.playbackRate > 0.1) {
+        if (this.sound.isPlaying() && this.sound.playbackRate > 0.1) {
 
-            musicTrackL.sound.pause();
+            this.sound.pause();
+            myButton.textColor = "red";
 
-        } else if(!musicTrackL.sound.isPlaying()) {
+        } else if(!this.sound.isPlaying()) {
 
-            musicTrackL.sound.play(0,1,1);
+            this.sound.play(0,1,1);
+            myButton.textColor = "green";
 
-        } else if (musicTrackL.sound.playbackRate < 0.01) {
+        } else if (this.sound.playbackRate < 0.01) {
 
-            musicTrackL.sound.rate(1);
+            this.sound.rate(1);
         }
 
     }
