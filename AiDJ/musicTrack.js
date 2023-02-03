@@ -2,38 +2,57 @@ class MusicTrack {
 
     constructor(trackNumber) {
 
-        this.pg = createGraphics(200, 400); //makes a PGraphics buffer 3 times the height of the canvas --> 1200 px
-        //this.pg.blendMode(MULTIPLY);
+        this.pg = createGraphics(min(windowWidth/2, 200), min(windowHeight/2, 400)); //makes a PGraphics buffer 3 times the height of the canvas --> 1200 px
+
         this.offsetX = trackNumber*this.pg.width;
         this.offsetY = 0;
+
+        this.drag = 0;
+
+        this.upload = createFileInput(this.dropHandler.bind(this));
+        this.upload.position(trackNumber*this.pg.width,windowHeight-50);
+        this.upload.id("fileInput" + trackNumber);
+        this.upload.hide();
+
+        this.label = createElement("label", "UPLOAD");
+        this.label.size(this.pg.width, 100);
+        this.label.style("border", "1px solid black");
+        this.label.style("font-family", "sans-serif");
+        this.label.style("background", "red");
+        this.label.attribute("for", "fileInput" + trackNumber);
+        this.label.position(trackNumber*this.pg.width,windowHeight-50);
+
+        this.createPlayPauseButton(trackNumber);
+        this.createReverbButton(trackNumber);
+
+        this.trackNumber = trackNumber;
+
     }
 
-    sync() {
+    sync() { //draw loop
 
-        //If sounds exists then sync it with 1 line = 10ms so currentTime*100 as the position 
-        //minus height to make it be visible and then + height/2 to center it
         if (this.sound) {
+            //draw the PGraphics buffer
+            this.pg.push();
+            image(this.pg, this.offsetX, this.offsetY + this.drag);
 
-            push();
-
-            image(this.pg, this.offsetX, this.offsetY + drag);
-
-            pop();
-
-            //metronome
+            //metronome and dragging
             this.metronome();
+            this.dragWaveform();
 
-            this.pg.push()
-            //this.pg.translate(-this.pg.width/2, -this.pg.height/2); //webgl
-
+            //draw waveform tick lines and make index/time updated
             if(this.peaks && this.ticks) {
+                textAlign(CENTER, CENTER);
+                text(this.bpm, 50 + this.trackNumber*this.pg.width, 450);
                 this.index = round(this.sound.currentTime()*100);
                 this.drawAudioWaveform(this.index, this.bass, this.snare);
                 this.drawTickLines();
             }
-
             this.pg.pop();
+            
         }
+        this.button.draw();
+        this.button2.draw();
 
     }
 
@@ -44,7 +63,108 @@ class MusicTrack {
         }
     }
 
+    dragWaveform() {
+
+        let c1 = mouseX < this.pg.width*(this.trackNumber+1);
+        let c2 = mouseX > this.pg.width*this.trackNumber;
+        let c3 = mouseY < this.pg.height;
+        let c4 = mouseY > 0;
+        
+        if (mouseIsPressed && c1 && c2 && c3 && c4 ) {
+            this.drag += mouseY - pmouseY;
+        }
+
+        if (!mouseIsPressed && mouseWasPressed && this.drag != 0) {
+
+            let jumpTime = this.sound.currentTime() + this.drag/100;
+
+            jumpTime = min(jumpTime, this.sound.duration() - 0.01);
+            jumpTime = max(jumpTime, 0.01);
+
+            this.sound.jump(jumpTime);
+
+            this.drag = 0;
+        }
+
+    }
+
+    createPlayPauseButton (trackNumber) {
+
+        this.button = new Clickable(trackNumber*this.pg.width,this.pg.height);
+        this.button.text = "⏯︎";
+        this.button.textScaled = true;
+        this.button.cornerRadius = 0;
+        this.button.resize(100, 100);
+        this.button.onHover = function () {this.color = "lightgray"};
+        this.button.onOutside = function () {this.color = "white"};
+        this.button.onPress = this.playPause.bind(this);
+
+    }
+
+    createReverbButton(trackNumber) {
+
+        this.reverb = new p5.Reverb();
+        this.reverb.drywet(0);
+
+        this.button2 = new Clickable(trackNumber*this.pg.width+this.pg.width/2,this.pg.height);
+        this.button2.text = "reverb";
+        this.button2.textScaled = true;
+        this.button2.cornerRadius = 0;
+        this.button2.resize(100, 100);
+        this.button2.onHover = function () {this.color = "lightgray"};
+        this.button2.onOutside = function () {this.color = "white"};
+        this.button2.onPress = this.reverbToggle.bind(this);
+
+    }
+
+    reverbToggle () {
+
+        if (this.sound) {
+
+            console.log(this.reverb.drywet());
+
+            if (this.reverb.drywet() == 0) {
+                this.reverb.drywet(0.5);
+                this.button2.textColor = "green";
+                console.log("case 1");
+            } else if (this.reverb.drywet() != 0) {
+                this.reverb.drywet(0);
+                this.button2.textColor = "red";
+                console.log("case 2");
+            }
+
+        }
+
+    }
+
+    playPause () {
+
+        if(this.sound) {
+
+            if (this.sound.rate() != 0) {
+    
+                this.sound.rate(0);
+                this.sound.setVolume(0);
+                this.button.textColor = "red";
+    
+            } else if (this.sound.rate() == 0) {
+
+                this.sound.rate(1);
+                this.sound.setVolume(1);
+                this.button.textColor = "green";
+    
+            }
+
+            if(!this.sound.isPlaying()) {
+                this.sound.play(0,0,0);
+            }
+    
+        }
+    }
+
     dropHandler (event) {
+
+        console.log(this.trackNumber, "TRACKNUMBER");
 
         //clears all previous data to reset for new file
         if (this.sound && this.sound.isPlaying()) {
@@ -64,6 +184,9 @@ class MusicTrack {
             this.plotPoints = (e.buffer.length/e.buffer.sampleRate) * 100; //--> 441 samples per pixel or 10ms per pixel
             this.tickCount = 0;
             this.essentiaAnalyseTrack(e);
+            this.sound.play(0, 0, 0);
+            this.sound.disconnect();
+            this.reverb.process(this.sound, 3, 2);
     
         });
     
@@ -79,7 +202,8 @@ class MusicTrack {
 
         essentiaWorker.onmessage = (e) => { 
             console.log(e.data);
-            this.ticks = e.data.ticks; 
+            this.ticks = e.data.ticks;
+            this.bpm = e.data.bpm.toFixed(2);
             this.bass = e.data.bass;
             this.snare = e.data.snare;
             this.peaks = this.sound.getPeaks(this.plotPoints);
@@ -116,22 +240,26 @@ class MusicTrack {
     drawAudioWaveform(index, bass, snare) {
 
         //draw the audio waveform on the pg buffer and then translate
+
+        let HALF_PG_HEIGHT = ceil(this.pg.height/2);
         
         this.pg.push();
-
         this.pg.translate(0, this.sound.currentTime()*100);
-        this.pg.background(128);
+        this.pg.background(127);
+
+        //this.pg.blendMode(EXCLUSION);
 
         this.pg.colorMode(HSB, 360, 1, 1, 1);
-        this.pg.strokeWeight(5);
+        this.pg.strokeWeight(1);
 
         //MAIN DRAWING LOOP
-        for (let i = index-200; i < index+200; i++) {
+        for (let i = max(index-HALF_PG_HEIGHT, 0); i < index+HALF_PG_HEIGHT; i++) {
 
-            this.pg.stroke(250, 1, snare[i]*20);
+            //optimise this maybe?
+            this.pg.stroke(250, snare[i]*20, 1);
 
             if (bass[i] > 0.3) {
-                this.pg.stroke(0, 1, bass[i]);
+                this.pg.stroke(0, bass[i], 1);
             }
 
             let x1 = map(this.peaks[i], -1, 1, 0, this.pg.width);
@@ -141,9 +269,8 @@ class MusicTrack {
 
             //DRAW LINES
             this.pg.line(x1,y1,x2,y2);
-
         }
-
+        
         this.pg.pop();
     
     }
