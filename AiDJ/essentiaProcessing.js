@@ -23,7 +23,7 @@ onmessage = (e) => {
   let bufferSize = 882*2;
 
   //Convert to VectorArray
-  let vectorSignalLeft = essentia.arrayToVector(e.data[0]);
+  // let vectorSignalLeft = essentia.arrayToVector(e.data[0]);
   // let vectorSignalRight = essentia.arrayToVector(e.data[1]);
 
   //Convert to Mono
@@ -51,13 +51,13 @@ onmessage = (e) => {
   }
 
   //Extract Features
-  let ticks = essentia.vectorToArray(essentia.BeatTrackerDegara(vectorSignalLeft).ticks);
-  let bpm = essentia.PercivalBpmEstimator(vectorSignalLeft, 1024, 2048, 128, 128, 210, 50, 44100).bpm;
-  console.log("A");
+  // let ticks = essentia.vectorToArray(essentia.BeatTrackerDegara(vectorSignalLeft).ticks);
+  // let bpm = essentia.PercivalBpmEstimator(vectorSignalLeft, 1024, 2048, 128, 128, 210, 50, 44100).bpm;
+  // console.log("A");
 
   postMessage({
-    bpm: bpm,
-    ticks: ticks,
+    // bpm: bpm,
+    // ticks: ticks,
     bass: lowEnergyInFrames, 
     snare: snareEnergyInFrames
   });

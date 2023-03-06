@@ -165,7 +165,7 @@ class MusicTrack {
 
     createSearchBox (trackNumber) {
 
-        this.searchBox = createInput("", "text");
+        this.searchBox = createInput();
         this.searchBox.position(200,500);
         this.searchBox.attribute("onKeyDown", "searchBoxEnter(event)");
 
@@ -310,16 +310,30 @@ class MusicTrack {
         const essentiaWorker = new Worker("essentiaProcessing.js");
         essentiaWorker.postMessage([ e.buffer.getChannelData(0), e.buffer.getChannelData(1), e.buffer.sampleRate]);
 
-        essentiaWorker.onmessage = (e) => { 
-            console.log(e.data);
-            this.ticks = e.data.ticks;
-            this.bpm = e.data.bpm;
-            this.initialBpm = e.data.bpm;
+        essentiaWorker.onmessage = (e) => {
+            // console.log(e.data);
+            // this.ticks = e.data.ticks;
+            // this.bpm = e.data.bpm;
+            // this.initialBpm = e.data.bpm;
+            // this.bass = e.data.bass;
+            // this.snare = e.data.snare;
+            // this.peaks = this.sound.getPeaks(this.plotPoints);
+            // this.isLooping = false;
+            // this.drawAudioWaveform();
+
+            this.ticks = [];
+            this.spotify.beats.forEach(element => {
+                this.ticks.push(element.start);
+            });
+            
+            this.bpm = this.spotify.track.tempo;
+            this.initialBpm = this.spotify.track.tempo;
             this.bass = e.data.bass;
             this.snare = e.data.snare;
             this.peaks = this.sound.getPeaks(this.plotPoints);
             this.isLooping = false;
             this.drawAudioWaveform();
+
         }
 
     }
