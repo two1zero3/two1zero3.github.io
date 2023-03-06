@@ -1,11 +1,5 @@
-// TODO : REWRITE INGESTION PART OF AUDIO TO MAKE EVERYTHING 44.1Khz (STARTED) --> DONE
-// ALSO OPTIMISE / REWRITE WAVEFORM DISPLAY PART OF CODE !! --> DONE
-// MAKE WAVEFORM COLORED DEPENDING ON LOW MID HIGH ENERGY --> ALMOST DONE
-// MAKE WAVEFORM DISPLACEABLE WHEN DRAGGING IT UP OR DOWN --> FIND SOLUTION FOR MAKING IT SMOOTH
-// START WORK TO MAKE EVERYTHING WORK WITH 2 MUSIC TRACKS
-// START WORK ON THE INTERFACE AND LOOPING / FX ETC
-
 // !! MAKE WAVEFORM DISPLAY MORE PLAYFUL ? MORE INTUITIVE SOMETHING MORE GRAPHIC LIKE DOTS?
+// GET TICK & TEMPO INFORMATION FROM SPOTIFY --> GET HELP FROM ID3 TAGS CHECK ARE.NA
 
 // 2022 Copyright Andreas Reza Abbaszadeh
 var canvas;
@@ -36,6 +30,7 @@ function setup() {
     canvas.drop( (e) => {musicTrackL.dropHandler(e)} );
 
     frameRate(240);
+    textAlign(CENTER, CENTER);
 
 }
 
@@ -56,12 +51,9 @@ function draw() {
     push();
 
     stroke(255,0,0);
-    line(0,musicTrackL.pg.height/2,musicTrackL.pg.width*2,musicTrackL.pg.height/2); //red line in the middle of the screen
+    line(musicTrackL.pg.width, musicTrackL.pg.height/2, musicTrackL.pg.width*3, musicTrackL.pg.height/2); //red line in the middle of the screen
 
-    stroke(255,255,255);
-    line(200, 0, 200, 400);
-
-    fill(255);
+    fill(0);
     text(~~frameRate(), 50, 50);
 
     pop();

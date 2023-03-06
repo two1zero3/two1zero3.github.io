@@ -2,34 +2,39 @@ class MusicTrack {
 
     constructor(trackNumber) {
 
-        this.pg = createGraphics(min(windowWidth/2, 200), min(windowHeight/2, 400)); //makes a PGraphics buffer 3 times the height of the canvas --> 1200 px
+        this.pg = createGraphics(min(windowWidth/4, 100), min(windowHeight/2, 200)); //makes a PGraphics buffer 3 times the height of the canvas --> 1200 px
 
-        this.offsetX = trackNumber*this.pg.width;
+        this.offsetX = trackNumber*this.pg.width+this.pg.width;
         this.offsetY = 0;
 
         this.drag = 0;
 
         this.upload = createFileInput(this.dropHandler.bind(this));
-        this.upload.position(trackNumber*this.pg.width,windowHeight-50);
         this.upload.id("fileInput" + trackNumber);
         this.upload.hide();
 
         this.label = createElement("label", "UPLOAD");
-        this.label.size(this.pg.width, 100);
+        this.label.size(this.pg.width*2, 100);
         this.label.style("border", "1px solid black");
         this.label.style("font-family", "sans-serif");
         this.label.style("background", "red");
         this.label.attribute("for", "fileInput" + trackNumber);
-        this.label.position(trackNumber*this.pg.width,windowHeight-50);
+        this.label.position(trackNumber*this.pg.width*2,windowHeight-50);
 
         this.createPlayPauseButton(trackNumber);
         this.createReverbButton(trackNumber);
+        this.createLoopButton(trackNumber);
+        this.createLoopLengthButton(trackNumber);
+        this.createSyncSlider(trackNumber);
+        this.createSearchBox(trackNumber);
 
         this.trackNumber = trackNumber;
 
     }
 
     sync() { //draw loop
+
+        rect(this.pg.width*(this.trackNumber+1), 0, this.pg.width,  this.pg.height); // containers for pg
 
         if (this.sound) {
             //draw the PGraphics buffer
@@ -42,17 +47,24 @@ class MusicTrack {
 
             //draw waveform tick lines and make index/time updated
             if(this.peaks && this.ticks) {
-                textAlign(CENTER, CENTER);
-                text(this.bpm, 50 + this.trackNumber*this.pg.width, 450);
+
                 this.index = round(this.sound.currentTime()*100);
+                this.closestTick = closestIndex(this.sound.currentTime(), this.ticks);
+
                 this.drawAudioWaveform(this.index, this.bass, this.snare);
                 this.drawTickLines();
+                
+                text(this.bpm.toFixed(1), 50 + this.trackNumber*this.pg.width*2, 100);
+                
             }
+
             this.pg.pop();
             
         }
         this.button.draw();
         this.button2.draw();
+        this.loopButton.draw();
+        this.loopLengthButton.draw();
 
     }
 
@@ -65,10 +77,10 @@ class MusicTrack {
 
     dragWaveform() {
 
-        let c1 = mouseX < this.pg.width*(this.trackNumber+1);
-        let c2 = mouseX > this.pg.width*this.trackNumber;
+        let c1 = mouseX < this.offsetX+this.pg.width;
+        let c2 = mouseX > this.offsetX;
         let c3 = mouseY < this.pg.height;
-        let c4 = mouseY > 0;
+        let c4 = mouseY > this.offsetY;
         
         if (mouseIsPressed && c1 && c2 && c3 && c4 ) {
             this.drag += mouseY - pmouseY;
@@ -90,11 +102,11 @@ class MusicTrack {
 
     createPlayPauseButton (trackNumber) {
 
-        this.button = new Clickable(trackNumber*this.pg.width,this.pg.height);
+        this.button = new Clickable(trackNumber*this.pg.width*2,this.pg.height);
         this.button.text = "⏯︎";
         this.button.textScaled = true;
         this.button.cornerRadius = 0;
-        this.button.resize(100, 100);
+        this.button.resize(this.pg.width, 100);
         this.button.onHover = function () {this.color = "lightgray"};
         this.button.onOutside = function () {this.color = "white"};
         this.button.onPress = this.playPause.bind(this);
@@ -106,15 +118,112 @@ class MusicTrack {
         this.reverb = new p5.Reverb();
         this.reverb.drywet(0);
 
-        this.button2 = new Clickable(trackNumber*this.pg.width+this.pg.width/2,this.pg.height);
+        this.button2 = new Clickable(trackNumber*this.pg.width*2+this.pg.width,this.pg.height);
         this.button2.text = "reverb";
-        this.button2.textScaled = true;
+        this.button2.textSize = 20;
         this.button2.cornerRadius = 0;
-        this.button2.resize(100, 100);
+        this.button2.resize(this.pg.width, 100);
         this.button2.onHover = function () {this.color = "lightgray"};
         this.button2.onOutside = function () {this.color = "white"};
         this.button2.onPress = this.reverbToggle.bind(this);
 
+    }
+
+    createLoopButton (trackNumber) {
+
+        this.loopButton = new Clickable(trackNumber*this.pg.width*2,this.button.height+this.pg.height);
+        this.loopButton.text = "loop";
+        this.loopButton.textSize = 20;
+        this.loopButton.cornerRadius = 0;
+        this.loopButton.resize(this.pg.width, 100);
+        this.loopButton.onHover = function () {this.color = "lightgray"};
+        this.loopButton.onOutside = function () {this.color = "white"};
+        this.loopButton.onPress = this.loopToggle.bind(this);   
+
+    }
+
+    createLoopLengthButton (trackNumber) {
+
+        this.loopLengthButton = new Clickable(trackNumber*this.pg.width*2+this.pg.width,this.button.height+this.pg.height);
+        this.loopLengthButton.text = 4;
+        this.loopLengthButton.textSize = 20;
+        this.loopLengthButton.cornerRadius = 0;
+        this.loopLengthButton.resize(this.pg.width, 100);
+        this.loopLengthButton.onHover = function () {this.color = "lightgray"};
+        this.loopLengthButton.onOutside = function () {this.color = "white"};
+        this.loopLengthButton.onPress = this.loopLengthToggle.bind(this);
+
+    }
+
+    createSyncSlider(trackNumber) {
+        this.slider = createSlider(-100, 100, 0);
+        this.slider.position(trackNumber*this.pg.width*2,this.button.height*2+this.pg.height);
+        this.slider.size(this.pg.width*2, 100);
+        this.slider.changed(this.rateSlider.bind(this));
+
+    }
+
+    createSearchBox (trackNumber) {
+
+        this.searchBox = createInput("", "text");
+        this.searchBox.position(200,500);
+        this.searchBox.attribute("onKeyDown", "searchBoxEnter(event)");
+
+    }
+
+    rateSlider() {
+
+        if(this.bpm) {
+            
+            this.bpm = (this.slider.value()/10)+this.initialBpm; //update display
+            let rate = this.bpm/this.initialBpm; //calc real
+
+            if (this.sound.rate() != 0) {
+                this.sound.rate(rate);
+            }
+
+        }
+        
+    }
+
+    loopLengthToggle() {
+
+        let loopLengths = [2,4,8,16];
+        let index = closestIndex(this.loopLengthButton.text, loopLengths);
+
+        if(!this.isLooping) {
+
+            index++;
+            index = index % loopLengths.length;
+
+        }
+
+        this.loopLengthButton.text = loopLengths[index];
+        this.loopLength = this.loopLengthButton.text;
+
+    }
+
+    loopToggle() {
+
+        if(this.ticks) {
+            if(this.isLooping) {
+                this.sound.removeCue(this.cuePoint);
+            }
+            if(!this.isLooping) {
+
+                this.loopStartTime = this.sound.currentTime();
+                this.closestTickForLoop = closestIndex(this.loopStartTime, this.ticks);
+
+                let loopStartTimeQuantized = this.ticks[this.closestTickForLoop];
+                let timeForCuePoint = this.ticks[this.closestTickForLoop+this.loopLength];
+
+                this.cuePoint = this.sound.addCue(timeForCuePoint,() => {this.sound.jump(loopStartTimeQuantized)});
+            }
+
+            this.isLooping = !this.isLooping;
+
+
+        }
     }
 
     reverbToggle () {
@@ -149,7 +258,7 @@ class MusicTrack {
     
             } else if (this.sound.rate() == 0) {
 
-                this.sound.rate(1);
+                this.sound.rate(this.bpm / this.initialBpm);
                 this.sound.setVolume(1);
                 this.button.textColor = "green";
     
@@ -183,6 +292,7 @@ class MusicTrack {
             this.ticks = undefined;
             this.plotPoints = (e.buffer.length/e.buffer.sampleRate) * 100; //--> 441 samples per pixel or 10ms per pixel
             this.tickCount = 0;
+            this.loopLength = this.loopLengthButton.text;
             this.essentiaAnalyseTrack(e);
             this.sound.play(0, 0, 0);
             this.sound.disconnect();
@@ -203,10 +313,12 @@ class MusicTrack {
         essentiaWorker.onmessage = (e) => { 
             console.log(e.data);
             this.ticks = e.data.ticks;
-            this.bpm = e.data.bpm.toFixed(2);
+            this.bpm = e.data.bpm;
+            this.initialBpm = e.data.bpm;
             this.bass = e.data.bass;
             this.snare = e.data.snare;
             this.peaks = this.sound.getPeaks(this.plotPoints);
+            this.isLooping = false;
             this.drawAudioWaveform();
         }
 
@@ -219,21 +331,33 @@ class MusicTrack {
         this.pg.stroke(0, 255, 255);
         this.pg.translate(0, this.sound.currentTime()*100);
 
-        let indexTick = closestIndex(this.sound.currentTime(), this.ticks);
-
         //draw beat detection ticks in white lines
-        for (let i = indexTick-5; i < indexTick+5; i++) {
+        for (let i = this.closestTick-5; i < this.closestTick+5; i++) {
 
             let x1 = 0;
-            let y1 = this.pg.height/2 - this.ticks[i]*100;  //WHY -10 ?
+            let y1 = this.pg.height/2 - this.ticks[i]*100;  
             let x2 = this.pg.width;
-            let y2 = this.pg.height/2 - this.ticks[i]*100   //WHY -10 ?
+            let y2 = this.pg.height/2 - this.ticks[i]*100;
 
             this.pg.line(x1,y1,x2,y2);
 
         }
 
+        if (this.isLooping)
+            this.drawLoop();
+
         this.pg.pop();
+
+    }
+
+    drawLoop() {
+
+        let x1_l = 0;
+        let y1_l = this.pg.height/2 - this.ticks[this.closestTickForLoop]*100; 
+        let x2_l = this.pg.width;
+        let y2_l = this.pg.height/2 - this.ticks[this.closestTickForLoop+this.loopLength]*100; 
+        this.pg.fill(255,0,0,50);
+        this.pg.rect(x1_l, y2_l, this.pg.width, y1_l - y2_l);
 
     }
 
@@ -256,10 +380,10 @@ class MusicTrack {
         for (let i = max(index-HALF_PG_HEIGHT, 0); i < index+HALF_PG_HEIGHT; i++) {
 
             //optimise this maybe?
-            this.pg.stroke(250, snare[i]*20, 1);
+            this.pg.stroke(250, snare[floor(i/2)]*20, 1);
 
             if (bass[i] > 0.3) {
-                this.pg.stroke(0, bass[i], 1);
+                this.pg.stroke(0, bass[floor(i/2)], 1);
             }
 
             let x1 = map(this.peaks[i], -1, 1, 0, this.pg.width);

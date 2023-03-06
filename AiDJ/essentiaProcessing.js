@@ -20,18 +20,18 @@ console.log(essentia.algorithmNames);
 onmessage = (e) => {
 
   //Set buffer size
-  let bufferSize = 882;
+  let bufferSize = 882*2;
 
   //Convert to VectorArray
   let vectorSignalLeft = essentia.arrayToVector(e.data[0]);
-  let vectorSignalRight = essentia.arrayToVector(e.data[1]);
+  // let vectorSignalRight = essentia.arrayToVector(e.data[1]);
 
   //Convert to Mono
-  let monoMixDown = essentia.MonoMixer( vectorSignalLeft, vectorSignalRight );
-  let mono32Array = essentia.vectorToArray(monoMixDown.audio);
+  //let monoMixDown = essentia.MonoMixer( vectorSignalLeft, vectorSignalRight );
+  //let mono32Array = essentia.vectorToArray(monoMixDown.audio);
  
   //Generate for Audio Spectrum
-  let frameCutter = generateFrames(mono32Array, bufferSize, bufferSize/2);
+  let frameCutter = generateFrames(e.data[0], bufferSize, bufferSize/2);
 
   for (let k = 0; k < frameCutter.length; k++) {
 
@@ -51,12 +51,12 @@ onmessage = (e) => {
   }
 
   //Extract Features
-  var rythmExtractor = essentia.RhythmExtractor2013(monoMixDown.audio, 208, "degara", 40);
-  console.log(rythmExtractor.ticks);
-  var ticks = essentia.vectorToArray(rythmExtractor.ticks);
+  let ticks = essentia.vectorToArray(essentia.BeatTrackerDegara(vectorSignalLeft).ticks);
+  let bpm = essentia.PercivalBpmEstimator(vectorSignalLeft, 1024, 2048, 128, 128, 210, 50, 44100).bpm;
+  console.log("A");
 
   postMessage({
-    bpm: rythmExtractor.bpm,
+    bpm: bpm,
     ticks: ticks,
     bass: lowEnergyInFrames, 
     snare: snareEnergyInFrames
