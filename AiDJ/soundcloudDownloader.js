@@ -17,7 +17,7 @@ async function loadload(searchValue) {
     const client_id = "Ya7cEWyTIYPsvqGiHRBACgpAZ7lVcZXs";
 
     searchUrl = new URL(`https://api-v2.soundcloud.com/search?q=${searchValue}&client_id=${client_id}&limit=20`);
-    const response = await fetch(searchUrl);
+    const response = await fetch(searchUrl, { mode: 'cors' });
     const data = await response.json();
     const songJSON = data.collection.find(element => element.artwork_url != undefined);
     const url = songJSON.media.transcodings.find(element => element.format.mime_type == "audio/mpeg").url
@@ -35,14 +35,14 @@ async function fetchSong (client_id, url) {
     const proxyUrl = '';
     const songUrl = new URL(`${url}?client_id=${client_id}`);
 
-    const response = await fetch(proxyUrl + songUrl);
+    const response = await fetch(proxyUrl + songUrl, { mode: 'cors' });
     const data = await response.json();
 
     fetchHLS(data.url); //fetch the HLS file, parse it and extract the parts URLs
 }
 
 async function fetchHLS (url) {
-    const response = await fetch(url);
+    const response = await fetch(url, { mode: 'cors' });
     var data = await response.text();
     var reader = new M3U8FileParser();
     reader.read(data);
