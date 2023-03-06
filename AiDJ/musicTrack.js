@@ -9,23 +9,11 @@ class MusicTrack {
 
         this.drag = 0;
 
-        this.upload = createFileInput(this.dropHandler.bind(this));
-        this.upload.id("fileInput" + trackNumber);
-        this.upload.hide();
-
-        this.label = createElement("label", "UPLOAD");
-        this.label.size(this.pg.width*2, 100);
-        this.label.style("border", "1px solid black");
-        this.label.style("font-family", "sans-serif");
-        this.label.style("background", "red");
-        this.label.attribute("for", "fileInput" + trackNumber);
-        this.label.position(trackNumber*this.pg.width*2,windowHeight-50);
-
         this.createPlayPauseButton(trackNumber);
         this.createReverbButton(trackNumber);
         this.createLoopButton(trackNumber);
         this.createLoopLengthButton(trackNumber);
-        this.createSyncSlider(trackNumber);
+        this.createTempoButtons(trackNumber);
         this.createSearchBox(trackNumber);
 
         this.trackNumber = trackNumber;
@@ -155,7 +143,7 @@ class MusicTrack {
 
     }
 
-    createSyncSlider(trackNumber) {
+    createTempoButtons(trackNumber) {
         this.slider = createSlider(-100, 100, 0);
         this.slider.position(trackNumber*this.pg.width*2,this.button.height*2+this.pg.height);
         this.slider.size(this.pg.width*2, 100);
@@ -166,12 +154,12 @@ class MusicTrack {
     createSearchBox (trackNumber) {
 
         this.searchBox = createInput();
-        this.searchBox.position(200,500);
-        this.searchBox.attribute("onKeyDown", "searchBoxEnter(event)");
+        this.searchBox.position(200 * trackNumber,500);
+        this.searchBox.attribute("onKeyDown", `searchBoxEnter${trackNumber}(event)`);
 
     }
 
-    rateSlider() {
+    rateSlider() { //change logic for it to change 0.1 bpm at a time with 2 buttons
 
         if(this.bpm) {
             

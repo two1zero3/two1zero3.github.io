@@ -1,12 +1,20 @@
-function searchBoxEnter(event) {
+function searchBoxEnter0(event) {
 
     if (event.key == "Enter") {
-        loadload(musicTrackR.searchBox.value());
+        loadload(musicTrackL.searchBox.value(), musicTrackL);
     }
 
 }
 
-async function loadload(searchValue) {
+function searchBoxEnter1(event) {
+
+    if (event.key == "Enter") {
+        loadload(musicTrackR.searchBox.value(), musicTrackR);
+    }
+
+}
+
+async function loadload(searchValue, deck) {
 
     //get initial HLS file from track id
 
@@ -23,24 +31,28 @@ async function loadload(searchValue) {
     const songJSON = data.collection.find(element => element.artwork_url != undefined);
     const url = songJSON.media.transcodings.find(element => element.format.mime_type == "audio/mpeg").url
 
-    fetchSong(client_id, url);
+    if (songJSON.monetization_model == "SUB_HIGH_TIER") {
+        alert("Warning : due to Soundcloud Go limitations this track will only play the 30 first seconds");
+    }
+
+    fetchSong(client_id, url, deck);
     console.log(songJSON);
     getBpmFromSpotify(searchValue)
-        .then((data) => musicTrackL.spotify = data);
+        .then((data) => deck.spotify = data);
     
 }
 
-async function fetchSong (client_id, url) {
+async function fetchSong (client_id, url, deck) {
 
     const songUrl = new URL(`${url}?client_id=${client_id}`);
 
     const response = await fetch(proxyUrl + songUrl);
     const data = await response.json();
 
-    fetchHLS(data.url); //fetch the HLS file, parse it and extract the parts URLs
+    fetchHLS(data.url, deck); //fetch the HLS file, parse it and extract the parts URLs
 }
 
-async function fetchHLS (url) {
+async function fetchHLS (url, deck) {
     
     const response = await fetch(proxyUrl + url);
 
@@ -57,11 +69,11 @@ async function fetchHLS (url) {
         
     }
 
-    fetchParts(urls); //from the list of small mp3 parts concat it with cronker
+    fetchParts(urls, deck); //from the list of small mp3 parts concat it with cronker
     
 }
 
-async function fetchParts (urls) {
+async function fetchParts (urls, deck) {
 
     const crunker = new Crunker.default();
 
@@ -70,7 +82,7 @@ async function fetchParts (urls) {
         .fetchAudio(...urls)
         .then((buffers) => crunker.concatAudio(buffers))
         .then((merged) => crunker.export(merged, 'audio/mp3'))
-        .then((merged) => musicTrackL.dropHandler({file:merged.blob}))
+        .then((merged) => deck.dropHandler({file:merged.blob}))
 
 
     //use cronker to concat all the audiobuffers and pass it to a DJ track
