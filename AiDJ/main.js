@@ -11,6 +11,8 @@ var drag = 0;
 var bpmL;
 var bpmR;
 
+const proxyUrl = 'https://corsproxy.io/?';
+
 var mouseWasPressed;
 
 //Create P5.js Canvas in global mode
