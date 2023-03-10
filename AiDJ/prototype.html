@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="prototype.css">
+    <title>AiDJ</title>
+    <script src="./p5.js"></script>
+    <script src="./p5.clickable.js"></script>
+    <script src="https://unpkg.com/crunker@latest/dist/crunker.js"></script>
+    <script src="https://www.unpkg.com/m3u8-file-parser@0.2.4/dist/m3u8-file-parser.min.js"></script>
+    <script src="./p5.sound.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <script src="./main.js"></script>
+    <script src="./musicTrack.js"></script>
+    <script src="./soundcloudDownloader.js"></script>
+    <header>
+        <div class="header-div">
+            <label class="bpm-left">---</label>
+            <div class="bpm-indicator-left"></div>
+        </div>
+        <div class="header-div">
+            <button onclick="addSong()">+</button>
+        </div>
+        <div class="header-div">
+            <label class="bpm-right">---</label>
+            <div class="bpm-indicator-right"></div>
+        </div>
+    </header>
+    <main>
+        <div class="waveforms" id="p5Elements">
+                <div id="Canvas" style="grid-area: Canvas;">
+        </div>
+        </div>
+        <div class="bottom">
+            <div class="slider-left display-grid">
+                <label>bpm</label>
+                <button class="max-size-button bpm-more-left">+</button>
+                <button class="max-size-button bpm-less-left">-</button>
+            </div>
+            <div class="button-container">
+                <div class="button-label">
+                    <label>play / pause</label>
+                </div>
+                <button class="round-button play-left"></button>
+            </div>
+            <div class="button-container">
+                <div class="button-label">
+                    <label>play / pause</label>
+                </div>
+                <button class="round-button play-right"></button>
+            </div>
+            <div class="slider-right display-grid">
+                <label>bpm</label>
+                <button class="max-size-button bpm-more-right">+</button>
+                <button class="max-size-button bpm-less-right">-</button>
+            </div>
+            <div class="vol-left">
+                <input type="range" value="100" step="5" name="debug" >
+            </div>
+            <div class="button-container">
+                <div class="button-label">
+                    <label class="sync-text-left">sync</label>
+                </div>
+                <button class="round-button sync-left"></button>
+            </div>
+            <div class="button-container">
+                <div class="button-label">
+                    <label class="sync-text-right">sync</label>
+                </div>
+                <button class="round-button sync-right"></button>
+            </div>
+            <div class="vol-right">
+                <input type="range" value="100" step="5" name="debug">
+            </div>
+            <div class="button-container">
+                <div class="button-label">
+                    <label>loop</label>
+                </div>
+                <button class="round-button loop-left"></button>
+            </div>
+            <div class="button-container">
+                <div class="button-label">
+                    <label>loop</label>
+                </div>
+                <button class="round-button loop-right"></button>
+            </div>
+            <div class="button-container">
+                <div class="button-label">
+                    <label>loop length</label>
+                </div>
+                <button class="square-button looplength-left">4</button>
+            </div>
+            <div class="button-container">
+                <div class="button-label">
+                    <label>loop length</label>
+                </div>
+                <button class="square-button looplength-right">4</button>
+            </div>
+        </div>
+    </main>
+    <div class="addsong hidden">
+        <div class="addsong-container">
+            <div class="addsong-searchbar-container">
+                <input type="search" placeholder="search anything" name="" id="addsong-searchbar" size="15">
+            </div>
+            <div class="addsong-track">
+                <div class="addsong-track-image-container">
+                    <img src="./AlbumCoverPlaceholder.png" id="album-cover" alt="">
+                </div>
+                <div class="addsong-track-info-container">
+                    <label class="add-song-track-artist">artist name</label>
+                    <label class="add-song-track-songname">song title</label>
+                    <hr>
+                    <label class="add-song-track-bpm secondary-text">BPM : --- BPM</label>
+                    <label class="add-song-track-key secondary-text">Key : ---</label>
+                    <hr>
+                    <label class="add-song-track-sp-text italic">Spotify :</label>
+                    <label class="add-song-track-sp-name secondary-text">artist name - song title</label>
+                </div>
+            </div>
+            <div class="addsong-deckchose">
+                <button id="load-left">LEFT</button>
+                <button id="load-right">RIGHT</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
