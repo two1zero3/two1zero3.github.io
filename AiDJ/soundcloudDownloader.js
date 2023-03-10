@@ -1,26 +1,18 @@
-function searchBoxEnter0(event) {
+// MAKE A CLASS FOR ALL OF THIS SO U CAN STORE MEMORY STUFF
 
+function searchBoxEnter(event) {
     if (event.key == "Enter") {
-        loadload(musicTrackL.searchBox.value(), musicTrackL);
+        loadload(musicTrackL.searchBox.value());
     }
 
 }
 
-function searchBoxEnter1(event) {
+let spotifyTrackName;
+let tempSpotifyData;
+let url_d;
+async function loadload(searchValue) {
 
-    if (event.key == "Enter") {
-        loadload(musicTrackR.searchBox.value(), musicTrackR);
-    }
-
-}
-
-async function loadload(searchValue, deck) {
-
-    //get initial HLS file from track id
-
-    //INCLUDE SPOTIFY ANALYSIS --> MATCH ISRC?
-
-    // !! INCLUDE -> ability to search
+    //get search results and pick first
 
     const client_id = "Ya7cEWyTIYPsvqGiHRBACgpAZ7lVcZXs";
     const searchUrl = new URL(`https://api-v2.soundcloud.com/search?q=${searchValue}&client_id=${client_id}&limit=20`);
@@ -29,17 +21,43 @@ async function loadload(searchValue, deck) {
     const data = await response.json();
 
     const songJSON = data.collection.find(element => element.artwork_url != undefined);
-    const url = songJSON.media.transcodings.find(element => element.format.mime_type == "audio/mpeg").url
+    const url = songJSON.media.transcodings.find(element => element.format.mime_type == "audio/mpeg").url;
 
     if (songJSON.monetization_model == "SUB_HIGH_TIER") {
         alert("Warning : due to Soundcloud Go limitations this track will only play the 30 first seconds");
     }
 
-    fetchSong(client_id, url, deck);
     console.log(songJSON);
+
+    //SET ALL INFO IN HTML
+    select("#album-cover").attribute("src", songJSON.artwork_url);
+    select(".add-song-track-songname").html(songJSON.title);
+    select(".add-song-track-artist").html(songJSON.user.username);
+
+    //set this.spotify as the data returned
     getBpmFromSpotify(searchValue)
-        .then((data) => deck.spotify = data);
+        .then((data) => tempSpotifyData = data)
+        .then((data) => select(".add-song-track-bpm").html(`BPM : ${data.track.tempo}`))
+        .then(() => select(".add-song-track-sp-name").html(spotifyTrackName));
+
+    //prime the buttons for loading up the current track
+    // select("#load-left").mousePressed(() => loadTrackUp(client_id, url, musicTrackL, tempSpotifyData));
+    // select("#load-right").mousePressed(() => loadTrackUp(client_id, url, musicTrackR, tempSpotifyData));
+    url_d = url;
+
+    console.log("LOAD FUCKING LOAD");
     
+}
+
+function loadTrackUp (client_id, url, deck, spotify) {
+
+  if (url_d) {
+
+    // console.log(client_id, url, deck, spotify);
+    fetchSong(client_id, url, deck);
+    deck.spotify = spotify;
+
+  }
 }
 
 async function fetchSong (client_id, url, deck) {
@@ -83,7 +101,6 @@ async function fetchParts (urls, deck) {
         .then((buffers) => crunker.concatAudio(buffers))
         .then((merged) => crunker.export(merged, 'audio/mp3'))
         .then((merged) => deck.dropHandler({file:merged.blob}))
-
 
     //use cronker to concat all the audiobuffers and pass it to a DJ track
 
@@ -130,13 +147,14 @@ async function getBpmFromSpotify(searchQuery) {
       .then(data => {
         if (data.tracks.items.length > 0) {
           const trackId = data.tracks.items[0].id;
+          spotifyTrackName = data.tracks.items[0].artists[0].name + " - " + data.tracks.items[0].name;
           const audioFeaturesUrl = `https://api.spotify.com/v1/audio-analysis/${trackId}`;
 
           return fetch(audioFeaturesUrl, { headers })
             .then(response => response.json())
             .then(data => data);
         } else {
-          throw new Error('No track found with the provided name' + isrc);
+          throw new Error('No track found with the provided name');
         }
       });
 }

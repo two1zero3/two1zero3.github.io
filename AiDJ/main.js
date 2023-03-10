@@ -11,9 +11,16 @@ var drag = 0;
 var bpmL;
 var bpmR;
 
+var svg;
+const client_id_d = "Ya7cEWyTIYPsvqGiHRBACgpAZ7lVcZXs";
+
 const proxyUrl = 'https://corsproxy.io/?';
 
 var mouseWasPressed;
+
+function loadedContent() {
+    svg = document.querySelector("svg");
+}
 
 //Create P5.js Canvas in global mode
 function setup() {
@@ -23,7 +30,7 @@ function setup() {
 
     pixelDensity(displayDensity());
 
-    canvas = createCanvas(windowWidth,windowHeight);
+    canvas = createCanvas(windowWidth,400);
     canvas.parent("#Canvas");
 
     //CREATE LEFT AND RIGHT TRACKS FROM CLASS
@@ -33,6 +40,12 @@ function setup() {
 
     frameRate(240);
     textAlign(CENTER, CENTER);
+
+    // select("#sliderActiveArea").mouseMoved(controlSlider)
+    // select("#sliderActiveArea").mousePressed(controlSlider)
+    // select("#sliderActiveArea").touchMoved(controlSlider)
+    // select("#sliderActiveArea").touchStarted(controlSlider)
+    // select("#ChooseButton").mousePressed(chooseButtonPressed)
 
 }
 
@@ -53,7 +66,7 @@ function draw() {
     push();
 
     stroke(255,0,0);
-    line(musicTrackL.pg.width, musicTrackL.pg.height/2, musicTrackL.pg.width*3, musicTrackL.pg.height/2); //red line in the middle of the screen
+    line(0, height/2, width, height/2); //red line in the middle of the screen
 
     fill(0);
     text(~~frameRate(), 50, 50);
@@ -64,7 +77,16 @@ function draw() {
 
 function mousePressed() {
     userStartAudio();
+}
+
+function addSong () {
+    if(select(".addsong").style("visibility") == "hidden") {
+        select(".addsong").style("visibility", "visible");
+    } else {
+        select(".addsong").style("visibility", "hidden");
+    }
     
+    console.log("CLICKED ADDSONG")
 }
 
 const closestIndex = (num, arr) => {

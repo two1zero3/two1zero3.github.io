@@ -2,18 +2,18 @@ class MusicTrack {
 
     constructor(trackNumber) {
 
-        this.pg = createGraphics(min(windowWidth/4, 100), min(windowHeight/2, 200)); //makes a PGraphics buffer 3 times the height of the canvas --> 1200 px
+        this.pg = createGraphics(width/2, height); //makes a PGraphics buffer 3 times the height of the canvas --> 1200 px
 
-        this.offsetX = trackNumber*this.pg.width+this.pg.width;
+        this.offsetX = trackNumber*this.pg.width;
         this.offsetY = 0;
 
         this.drag = 0;
 
         this.createPlayPauseButton(trackNumber);
         this.createReverbButton(trackNumber);
-        this.createLoopButton(trackNumber);
-        this.createLoopLengthButton(trackNumber);
-        this.createTempoButtons(trackNumber);
+        // this.createLoopButton(trackNumber);
+        // this.createLoopLengthButton(trackNumber);
+        // this.createTempoButtons(trackNumber);
         this.createSearchBox(trackNumber);
 
         this.trackNumber = trackNumber;
@@ -21,8 +21,6 @@ class MusicTrack {
     }
 
     sync() { //draw loop
-
-        rect(this.pg.width*(this.trackNumber+1), 0, this.pg.width,  this.pg.height); // containers for pg
 
         if (this.sound) {
             //draw the PGraphics buffer
@@ -41,18 +39,14 @@ class MusicTrack {
 
                 this.drawAudioWaveform(this.index, this.bass, this.snare);
                 this.drawTickLines();
-                
-                text(this.bpm.toFixed(1), 50 + this.trackNumber*this.pg.width*2, 100);
+
+                select(`.bpm-${this.cssSide}`).html(this.bpm.toFixed(1));
                 
             }
 
             this.pg.pop();
             
         }
-        this.button.draw();
-        this.button2.draw();
-        this.loopButton.draw();
-        this.loopLengthButton.draw();
 
     }
 
@@ -88,16 +82,20 @@ class MusicTrack {
 
     }
 
+
+
     createPlayPauseButton (trackNumber) {
 
-        this.button = new Clickable(trackNumber*this.pg.width*2,this.pg.height);
-        this.button.text = "⏯︎";
-        this.button.textScaled = true;
-        this.button.cornerRadius = 0;
-        this.button.resize(this.pg.width, 100);
-        this.button.onHover = function () {this.color = "lightgray"};
-        this.button.onOutside = function () {this.color = "white"};
-        this.button.onPress = this.playPause.bind(this);
+        if (trackNumber == 0) {
+            this.cssSide = "left";
+        } else {
+            this.cssSide = "right";
+        }
+
+        this.button = select(`.play-${this.cssSide}`);
+        this.button.mousePressed(this.playPause.bind(this));
+
+        select(`#load-${this.cssSide}`).mousePressed(() => loadTrackUp(client_id_d, url_d, this, tempSpotifyData));
 
     }
 
@@ -106,15 +104,10 @@ class MusicTrack {
         this.reverb = new p5.Reverb();
         this.reverb.drywet(0);
 
-        this.button2 = new Clickable(trackNumber*this.pg.width*2+this.pg.width,this.pg.height);
-        this.button2.text = "reverb";
-        this.button2.textSize = 20;
-        this.button2.cornerRadius = 0;
-        this.button2.resize(this.pg.width, 100);
-        this.button2.onHover = function () {this.color = "lightgray"};
-        this.button2.onOutside = function () {this.color = "white"};
-        this.button2.onPress = this.reverbToggle.bind(this);
+        this.reverbButton = select(`.sync-${this.cssSide}`);
 
+        //when mouse pressed invoke reverbtoggle with this bind and pass in the text element as arguement
+        this.reverbButton.mousePressed(this.reverbToggle.bind(this, select(`.sync-text-${this.cssSide}`))); 
     }
 
     createLoopButton (trackNumber) {
@@ -126,7 +119,7 @@ class MusicTrack {
         this.loopButton.resize(this.pg.width, 100);
         this.loopButton.onHover = function () {this.color = "lightgray"};
         this.loopButton.onOutside = function () {this.color = "white"};
-        this.loopButton.onPress = this.loopToggle.bind(this);   
+        this.loopButton.onPress = this.loopToggle.bind(this);  
 
     }
 
@@ -153,9 +146,8 @@ class MusicTrack {
 
     createSearchBox (trackNumber) {
 
-        this.searchBox = createInput();
-        this.searchBox.position(200 * trackNumber,500);
-        this.searchBox.attribute("onKeyDown", `searchBoxEnter${trackNumber}(event)`);
+        this.searchBox = select("#addsong-searchbar");
+        this.searchBox.attribute("onKeyDown", `searchBoxEnter(event)`);
 
     }
 
@@ -214,7 +206,7 @@ class MusicTrack {
         }
     }
 
-    reverbToggle () {
+    reverbToggle (button) {
 
         if (this.sound) {
 
@@ -222,12 +214,10 @@ class MusicTrack {
 
             if (this.reverb.drywet() == 0) {
                 this.reverb.drywet(0.5);
-                this.button2.textColor = "green";
-                console.log("case 1");
+                button.style("color", "green");
             } else if (this.reverb.drywet() != 0) {
                 this.reverb.drywet(0);
-                this.button2.textColor = "red";
-                console.log("case 2");
+                button.style("color", "red");
             }
 
         }
@@ -280,7 +270,7 @@ class MusicTrack {
             this.ticks = undefined;
             this.plotPoints = (e.buffer.length/e.buffer.sampleRate) * 100; //--> 441 samples per pixel or 10ms per pixel
             this.tickCount = 0;
-            this.loopLength = this.loopLengthButton.text;
+            // this.loopLength = this.loopLengthButton.text; //FIX / UNDERSTAND
             this.essentiaAnalyseTrack(e);
             this.sound.play(0, 0, 0);
             this.sound.disconnect();
