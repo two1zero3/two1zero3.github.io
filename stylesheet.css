@@ -1,122 +1,24 @@
-@font-face {
-    font-family: pilowlava;
-    src: url(fonts/Pilowlava-Regular.woff2);
-    src: url(fonts/Pilowlava-Regular.woff);
-    src: url(fonts/Pilowlava-Regular.otf);
-}
-@font-face {
-    font-family: 'Syne';
-    src: url('/fonts/Syne-Regular.woff2') format('woff2'),
-        url('/fonts/Syne-Regular.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
-html, body {
-    height: 100%;
-    padding:0;
-    margin:0;
-    touch-action: pan-y;
-    -ms-touch-action: pan-y;
-    cursor: none;
-    font-family: "syne";
-}
-body {
-    overflow: hidden ;
-}
-.main-grid-parent {
-    height: 100%;
+*, *:before, *:after {
     margin: 0;
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    grid-template-rows: 1fr 1fr 1fr;
+    padding: 0;
+    box-sizing: border-box;
+    overflow:hidden;
 }
-h1 {
-    color:#c21247;
-    font-family: pilowlava;
-    font-size: 4em;
-    text-align: center;
-}
-.logo{
-    height: 100px;
-}
-canvas {
-    border: 10px dashed hsl(21, 21%, 21%);
-}
-.member-links {
-    align-self: start;
-    max-width: 600px;
-    font-size: 2em;
-}
-ul {
-    list-style-type: square;
-}
-.Andreas::marker {
-    color: red;
-}
-.Sverre::marker {
-    color: blue;
-}
-.flag {
-    height: 0.75em;
-    width: auto;
-    vertical-align: middle;
-}
-output {
-    float:right;
-}
-div.cursors div {
-    position: absolute;
-    top: 150px;
-    left: 150px;
-    width: 32px;
-    height: 32px;
-    background-image:url("images/cdSpin64px.gif");
-    background-size: contain;
-    border-radius: 50%;
-    z-index: 10000;
-    pointer-events: none;
-    transform: translate(-50%, -50%);
-}
-div.cursors {
+html,body {
+    width: 100%;
+    height: 100%;
     overflow: hidden;
+    position: fixed;
 }
-a {
-    cursor: none;
-}
-output:last-of-type::after {
-    content: ":";
-    animation: blinker 1s step-start infinite;
-}
-/* .cursor-location-parent>p{
-    position: absolute;
-    margin-top: 10px;
-    margin-left: 10px;
-} */
-footer {
-    position: sticky;
-    margin-top: -25px;
-    text-align: center;
-    color: grey;
-    font-size:small;
-}
-@keyframes blinker {
-    50% {
-      opacity: 0;
-    }
-  }
 
-@media (hover: none) {
-    .cursors {
-        display: none;
-    }
-    .cursor-location-parent>p {
-        opacity: 0;
-    }
-    body {
-        overflow: visible;
-    }
+html {
+    touch-action: manipulation;
+}
 
+input[type="file"] {
+   background-color: royalblue;
+}
+input, textarea {
+    font-size: 16px;
+    -webkit-text-size-adjust: none;
 }
