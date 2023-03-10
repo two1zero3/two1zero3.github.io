@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="prototype.css">
+    <link rel="preload" href="NectoMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
     <title>AiDJ</title>
     <script src="./p5.js"></script>
     <script src="./p5.clickable.js"></script>
@@ -120,6 +121,11 @@
                     <hr>
                     <label class="add-song-track-sp-text italic">Spotify :</label>
                     <label class="add-song-track-sp-name secondary-text">artist name - song title</label>
+                    <div class="spotify-checkbox-container">
+                        <input type="checkbox" id="spotify-checkbox">
+                        <label for="spotify-checkbox">Correct ?</label>
+                    </div>
+                    
                 </div>
             </div>
             <div class="addsong-deckchose">
