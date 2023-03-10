@@ -43,7 +43,7 @@ class MusicTrack {
                 this.drawAudioWaveform(this.index, this.bass, this.snare);
                 this.drawTickLines();
 
-                this.sound.setVolume(this.volumeSlider.value());
+                this.sound.setVolume(this.volumeSlider.value()/100);
 
                 select(`.bpm-${this.cssSide}`).html(this.bpm.toFixed(1));
                 
@@ -139,9 +139,9 @@ class MusicTrack {
     createTempoButtons(trackNumber) {
 
         this.tempoMoreButton = select(`.bpm-more-${this.cssSide}`);
-        this.tempoMoreButton.mousePressed(this.rateSlider.bind(this, 0.1));
+        this.tempoMoreButton.mousePressed(this.rateSlider.bind(this, 0.5));
         this.tempoLessButton = select(`.bpm-less-${this.cssSide}`);
-        this.tempoLessButton.mousePressed(this.rateSlider.bind(this, -0.1));
+        this.tempoLessButton.mousePressed(this.rateSlider.bind(this, -0.5));
         
         // this.slider.changed(this.rateSlider.bind(this));
 

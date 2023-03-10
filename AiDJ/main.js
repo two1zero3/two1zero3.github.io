@@ -81,10 +81,13 @@ function mousePressed() {
 
 function addSong () {
     //show or hide the add song menu
-    if(select(".addsong").style("visibility") == "hidden") {
-        select(".addsong").style("visibility", "visible");
+    if(select(".addsong").elt.classList.contains('visible')) {
+        select(".addsong").elt.classList.remove('visible');
+        select(".addsong").elt.classList.add('hidden');
+        console.log(select(".addsong"));
     } else {
-        select(".addsong").style("visibility", "hidden");
+        select(".addsong").elt.classList.remove('hidden');
+        select(".addsong").elt.classList.add('visible');
     }
 }
 

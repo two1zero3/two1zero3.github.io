@@ -64,7 +64,7 @@ onmessage = (e) => {
 
 }
 
-function generateFrames (array, bufferSize, hopSize) {
+function generateFrames(array, bufferSize, hopSize) {
 
   const res = [];
 
