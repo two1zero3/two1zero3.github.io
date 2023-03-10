@@ -3,21 +3,295 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>AiDJ</title>
-    <script src="./p5.js"></script>
-    <script src="./p5.clickable.js"></script>
-    <script src="https://unpkg.com/crunker@latest/dist/crunker.js"></script>
-    <script src="https://www.unpkg.com/m3u8-file-parser@0.2.4/dist/m3u8-file-parser.min.js"></script>
-    <script src="./p5.sound.js"></script>
-    <link rel="stylesheet" href="stylesheet.css">
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <meta name="HandheldFriendly" content="true">
+    <title>2103</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <meta property="og:title" content="2103"/>
+    <meta property="og:description" content="insert cool website description"/>
+    <meta property="og:image" content="/android-chrome-512x512.png"/>
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    <main id="p5Elements">
-        <div id="Canvas" style="grid-area: Canvas;"></div>
-    </main>
-    <script src="./main.js"></script>
-    <script src="./musicTrack.js"></script>
-    <script src="./soundcloudDownloader.js"></script>
+    <header onselectstart='return false'>
+        <div class="name-container">
+            <li id="andreas-nametag" >Andreas</li>
+            <li id="sverre-nametag">Sverre</li>
+        </div>
+    </header>
+    <section class="section-wrapper">
+        <div class="item logo-container">
+            <span class="logo">21<img src="/images/04.02Blob.svg" alt="2103 logo" class="logo-image">3</span>
+        </div>
+        <a href="https://open.spotify.com/album/7A6MutudrSxcDa47a6HHOM?si=MYwOJCn1RlO7ICEjDiaMyg" itemscope itemtype="https://schema.org/MusicRecording">
+        	<meta itemprop="producer" content="2aab & sverre"/>
+            <meta itemprop="datePublished" content="2022-10-28"/>
+            <article class="item">
+                <div class="title">
+                    <h2>LANCEY FOUX - LIFE IN HELL</h2>
+                </div>
+                <div class="thumbnail">
+                    <img src="images/lifeinhell.jpg" alt="thumbnail of lancey foux - life in hell album">
+                </div>
+                <p class="description two1zero3-both">Production of 12TH HR (both) and TRY AGAIN (andreas) off Lancey Foux's sophomore studio album "LIFE IN HELL"</p>
+            </article>
+        </a>
+        <a href="https://www.youtube.com/watch?v=n3MDjw32n2E" itemscope itemtype="https://schema.org/MusicRecording">
+        	<meta itemprop="datePublished" content="2022-09-14"/>
+            <article class="item">
+                <div class="title">
+                    <h2>ODUNSI (THE ENGINE) - WTF! (EUPHORIA) (FT. 2AAB)</h2>
+                </div>
+                <div class="thumbnail">
+                    <img src="images/denimEP.jpg" alt="thumbnail of odunsi - denim EP">
+                </div>
+                <p class="description two1zero3-andreas">Production on Odunsi (the Engine)'s Denim EP</p>
+            </article>
+        </a>
+        <a href="https://open.spotify.com/album/1Dvg0OkNL0Q54Jp2es99nN?si=8Avn-1mGQ1eDwCPuPrJufw" itemscope itemtype="https://schema.org/MusicRecording">
+        	<meta itemprop="datePublished" content="2022-07-15"/>
+            <article class="item">
+                <div class="title">
+                    <h2>MAISON2500 - MASEVERSE!</h2>
+                </div>
+                <div class="thumbnail">
+                    <img src="images/maseverse.jpg" alt="thumbnail of maseverse album">
+                </div>
+                <p class="description two1zero3-andreas">Production of 2 tracks off Maison2500's 1st Studio Album</p>
+            </article>
+        </a>
+        <a href="https://www.youtube.com/watch?v=MmUzd1i6dek" itemscope itemtype="https://schema.org/VideoObject">
+        	<meta itemprop="datePublished" content="2022-05-23"/>
+            <article class="item">
+                <div class="title">
+                    <h2>LIL GNAR - NO REASON FT. LIL KEED & YAK GOTTI (OFFICIAL MUSIC VIDEO)</h2>
+                </div>
+                <div class="thumbnail">
+                    <img src="images/keedgnar.jpg" alt="thumbnail of lil gnar - no reason music video">
+                </div>
+                <p class="description two1zero3-andreas">VFX for Lil Gnar, Lil Keed and Yak Gotti music video</p>
+            </article>
+        </a>
+        <a href="https://www.youtube.com/watch?v=YzDPL7aMfC0" itemscope itemtype="https://schema.org/MusicRecording">
+            <meta itemprop="datePublished" content="2022-01-28"/>
+            <meta itemprop="producer" content="2aab"/>
+            <article class="item">
+                <div class="title">
+                    <h2>PINKPANTHERESS - LAST VALENTINES (2AAB REMIX)</h2>
+                </div>
+                <div class="thumbnail">
+                    <img src="images/pinkpantheressremix.jpg" alt="pinkpantheress to hell with it remix's cover art">
+                </div>
+                <p class="description two1zero3-andreas">remix for PinkPantheress' debut project</p>
+            </article>
+        </a>
+        <a href="https://www.youtube.com/watch?v=SUgQoSoqi0U" itemscope itemtype="https://schema.org/MusicRecording">
+            <meta itemprop="datePublished" content="2022-01-28"/>
+            <meta itemprop="producer" content="sverre"/>
+            <article class="item">
+                <div class="title">
+                    <h2>NOVA & HIKO MOMOJI - PRICE PAID</h2>
+                </div>
+                <div class="thumbnail">
+                    <img src="images/destinationunknown.jpg" alt="nova & hiko momoji - destination unknown cover art">
+                </div>
+                <p class="description two1zero3-sverre">production for artist nova & hiko momoji</p>
+            </article>
+        </a>
+        <a href="https://www.youtube.com/watch?v=QR96Ink862M" itemscope itemtype="https://schema.org/VideoObject">
+            <meta itemprop="datePublished" content="2022-01-11"/>
+            <meta itemprop="producer" content="2aab"/>
+            <article class="item">
+                <div class="title">
+                    <h2>TYFONTAINE - 24/CAN'T MISS (MUSIC VIDEO)</h2>
+                </div>
+                <div class="thumbnail">
+                    <img src="images/24cantmiss.jpg" alt="thumbnail of tyfontaine - 24/can't miss music video">
+                </div>
+                <p class="description two1zero3-andreas">VFX for Ty Fontaine - 24/cant miss music video</p>
+            </article>
+        </a>
+        <a href="https://www.youtube.com/watch?v=SOqQ8iQcHUc" itemscope itemtype="https://schema.org/MusicRecording">
+            <meta itemprop="datePublished" content="2021-11-28"/>
+            <meta itemprop="producer" content="2aab"/>
+            <article class="item">
+                <div class="title">
+                    <h2>ODUNSI (THE ENGINE) - HALF A TAB (FULL-LENGTH FILM)</h2>
+                </div>
+                <div class="thumbnail">
+                    <img src="images/halfatab.jpg" alt="thumbnail of half a tab film">
+                </div>
+                <p class="description two1zero3-andreas">production for part of the score of the full length film</p>
+            </article>
+        </a>
+        <a href="https://www.youtube.com/watch?v=23gbDic-F14" itemscope itemtype="https://schema.org/MusicRecording">
+            <meta itemprop="datePublished" content="2021-11-07"/>
+            <meta itemprop="producer" content="sverre"/>
+            <article class="item">
+                <div class="title">
+                    <h2>HXIKAI - NOWHERE 2 GO</h2>
+                </div>
+                <div class="thumbnail">
+                    <img src="images/nowhere2go.jpg" alt="HXIKAI - NOWHERE 2 GO cover art">
+                </div>
+                <p class="description two1zero3-sverre">production for artist hxikai with hiko momoji</p>
+            </article>
+        </a>
+        <a href="https://www.youtube.com/watch?v=U6-bQaUdk2w" itemscope itemtype="https://schema.org/MusicRecording">
+            <meta itemprop="datePublished" content="2021-11-05"/>
+            <meta itemprop="producer" content="sverre"/>
+            <article class="item">
+                <div class="title">
+                    <h2>TOCHI BEDFORD - BENJIS (FT. ODUNSI)</h2>
+                </div>
+                <div class="thumbnail">
+                    <img src="images/tochibenjis.jpg" alt="tochi bedford - after eternity cover art">
+                </div>
+                <p class="description two1zero3-sverre">production for artist tochi bedford & odunsi (the engine)</p>
+            </article>
+        </a>
+        <a href="https://www.youtube.com/watch?v=TgbtjV-ta9k" itemscope itemtype="https://schema.org/VideoObject">
+            <meta itemprop="datePublished" content="2021-10-29"/>
+            <meta itemprop="producer" content="2aab"/>
+            <article class="item">
+                <div class="title">
+                    <h2>LANDON CUBE, ANTHONY ORTIZ - MANIAC (OFFICIAL VISUALIZER)</h2>
+                </div>
+                <div class="thumbnail">
+                    <img src="images/landoncubemaniac.jpg" alt="LANDON CUBE, ANTHONY ORTIZ - MANIAC (OFFICIAL VISUALIZER) youtube video thumbnail">
+                </div>
+                <p class="description two1zero3-andreas">VFX for Landon Cube & Anthony Ortiz visualizer video</p>
+            </article>
+        </a>
+        <a href="https://open.spotify.com/album/1Lx0JYPF83CuDOb9CVxOE5" itemscope itemtype="https://schema.org/MusicRecording">
+            <meta itemprop="datePublished" content="2021-09-17"/>
+            <meta itemprop="producer" content="2aab"/>
+            <article class="item">
+                <div class="title">
+                    <h2>GUBBIMANE & 2AAB - TRASHPACK2020!</h2>
+                </div>
+                <div class="thumbnail">
+                    <img src="images/trashpack2020.jpg" alt="gubbimane - trashpack2020! cover art">
+                </div>
+                <p class="description two1zero3-andreas">collaborative EP with artist Gubbimane</p>
+            </article>
+        </a>
+        <a href="https://www.youtube.com/watch?v=cjpl_qpZMeA" itemscope itemtype="https://schema.org/MusicRecording">
+            <meta itemprop="datePublished" content="2021-08-06"/>
+            <meta itemprop="producer" content="2aab & sverre"/>
+            <article class="item">
+                <div class="title">
+                    <h2>DETO BLACK - THREE5ZERO</h2>
+                </div>
+                <div class="thumbnail">
+                    <img srcset="images/yungeverything.jpg" alt="deto black - yung everything album cover">
+                </div>
+                <p class="description two1zero3-both">production for artist Deto Black</p>
+            </article>
+        </a>
+        <a href="https://www.youtube.com/watch?v=NY_7HBG7J8s" itemscope itemtype="https://schema.org/MusicRecording">
+            <meta itemprop="datePublished" content="2021-07-30"/>
+            <meta itemprop="producer" content="2aab"/>
+            <article class="item">
+                <div class="title">
+                    <h2>MAISON2500 - X2 MUCH DOPE</h2>
+                </div>
+                <div class="thumbnail">
+                    <img src="images/x2muchdope.jpg" alt="maison2500 - x2 much dope cover art">
+                </div>
+                <p class="description two1zero3-andreas">production for artist Maison2500</p>
+            </article>
+        </a>
+        <a href="https://www.youtube.com/watch?v=4tQeWt-Im5E" itemscope itemtype="https://schema.org/CreativeWork">
+            <meta itemprop="datePublished" content="2021-05-28"/>
+            <meta itemprop="producer" content="2aab"/>
+            <article class="item">
+                <div class="title">
+                    <h2>MOWALOLA TV - IMVU FASHION SHOW</h2>
+                </div>
+                <div class="thumbnail">
+                    <img src="images/mowalolaimvu.jpg" alt="tochi bedford - after eternity cover art">
+                </div>
+                <p class="description two1zero3-sverre">mix for Mowalola IMVU fashion show</p>
+            </article>
+        </a>
+        <a href="https://www.youtube.com/watch?v=YxLbByyc_Cg" itemscope itemtype="https://schema.org/MusicRecording">
+            <meta itemprop="datePublished" content="2021-05-05"/>
+            <meta itemprop="producer" content="2aab"/>
+            <article class="item">
+                <div class="title">
+                    <h2>SKAIWATER - VETEMENTS</h2>
+                </div>
+                <div class="thumbnail">
+                    <img src="images/skaiwatervetements.jpg" alt="skaiwater - vetements cover art">
+                </div>
+                <p class="description two1zero3-andreas">production for artist Skaiwater</p>
+            </article>
+        </a>
+        <a href="https://www.youtube.com/watch?v=el4b-NCXYok&list=OLAK5uy_mpyFE0PppT9SPiKCxnj2Qp11wJPDQ7rOs" itemscope itemtype="https://schema.org/MusicRecording">
+            <meta itemprop="datePublished" content="2021-04-02"/>
+            <meta itemprop="producer" content="2aab"/>
+            <article class="item">
+                <div class="title">
+                    <h2>YEAT - ALIVË</h2>
+                </div>
+                <div class="thumbnail">
+                    <img src="images/yeatalive.jpg" alt="yeat - alivë cover art">
+                </div>
+                <p class="description two1zero3-andreas">production for 3 tracks off Yeat's album "alivë"</p>
+            </article>
+        </a>
+        <a href="https://www.youtube.com/watch?v=WsxOw0mvqgc" itemscope itemtype="https://schema.org/MusicRecording">
+            <meta itemprop="datePublished" content="2020-12-04"/>
+            <meta itemprop="producer" content="2aab"/>
+            <article class="item">
+                <div class="title">
+                    <h2>ODUNSI (THE ENGINE) - FUJI 5000</h2>
+                </div>
+                <div class="thumbnail">
+                    <img src="images/fuji5000.jpg" alt="odunsi the engine - fuji 5000 album cover">
+                </div>
+                <p class="description two1zero3-andreas">production for artist Odunsi (The Engine)</p>
+            </article>
+        </a>
+        <a href="https://www.youtube.com/watch?v=CkPT05Y8EGU" itemscope itemtype="https://schema.org/MusicRecording">
+            <meta itemprop="datePublished" content="2020-11-18"/>
+            <meta itemprop="producer" content="2aab"/>
+            <article class="item">
+                <div class="title">
+                    <h2>DRIP CITY | MOWALOLA | GUCCIFEST EMERGING DESIGNER FASHION FILM</h2>
+                </div>
+                <div class="thumbnail">
+                    <img src="images/mowalolagucci.jpg" alt="DRIP CITY | MOWALOLA | GUCCIFEST EMERGING DESIGNER FASHION FILM youtube video thumbnail">
+                </div>
+                <p class="description two1zero3-sverre">production for Mowalola Guccifest soundtrack with artist Odunsi (The Engine) and producer Zachsrevenge</p>
+            </article>
+        </a>
+        <a href="https://www.youtube.com/watch?v=fNZJ3eF1fm8" itemscope itemtype="https://schema.org/MusicRecording">
+            <meta itemprop="datePublished" content="2020-05-02"/>
+            <meta itemprop="producer" content="2aab"/>
+            <article class="item">
+                <div class="title">
+                    <h2>COCHISE - YESSIR</h2>
+                </div>
+                <div class="thumbnail">
+                    <img src="images/cochiseyessir.jpg" alt="cochise - yessir cover art">
+                </div>
+                <p class="description two1zero3-andreas">production for artist Cochise</p>
+            </article>
+        </a>
+    </section>
+    <footer>
+        <p>© 2022 - two1zero3</p>
+    </footer>
+    <script src="dates.js"></script>
+    <script src="menu.js"></script>
+    <script src="preventzooming.js"></script>
 </body>
 </html>
