@@ -19,27 +19,27 @@
     <script src="./soundcloudDownloader.js"></script>
     <header>
         <div class="header-div">
-            <label class="bpm-left">125.5</label>
-            <div class="bpm-indicator"></div>
+            <label class="bpm-left">---</label>
+            <div class="bpm-indicator-left"></div>
         </div>
         <div class="header-div">
             <button onclick="addSong()">+</button>
         </div>
         <div class="header-div">
-            <label class="bpm-right">125.5</label>
-            <div class="bpm-indicator"></div>
+            <label class="bpm-right">---</label>
+            <div class="bpm-indicator-right"></div>
         </div>
     </header>
     <main>
-        <div class="waveforms">
-            <main id="p5Elements">
-                <div id="Canvas" style="grid-area: Canvas;"></div>
-            </main>
-            
+        <div class="waveforms" id="p5Elements">
+                <div id="Canvas" style="grid-area: Canvas;">
+        </div>
         </div>
         <div class="bottom">
-            <div class="slider-l">
-                <input type="range" name="debug" id="">
+            <div class="slider-left display-grid">
+                <label>bpm</label>
+                <button class="max-size-button bpm-more-left">+</button>
+                <button class="max-size-button bpm-less-left">-</button>
             </div>
             <div class="button-container">
                 <div class="button-label">
@@ -53,11 +53,13 @@
                 </div>
                 <button class="round-button play-right"></button>
             </div>
-            <div class="slider-r">
-                <input type="range" name="debug" id="">
+            <div class="slider-right display-grid">
+                <label>bpm</label>
+                <button class="max-size-button bpm-more-right">+</button>
+                <button class="max-size-button bpm-less-right">-</button>
             </div>
-            <div class="vol-l">
-                <input type="range" name="debug" id="">
+            <div class="vol-left">
+                <input type="range" value="100" step="5" name="debug" >
             </div>
             <div class="button-container">
                 <div class="button-label">
@@ -71,36 +73,36 @@
                 </div>
                 <button class="round-button sync-right"></button>
             </div>
-            <div class="vol-r">
-                <input type="range" name="debug" id="">
+            <div class="vol-right">
+                <input type="range" value="100" step="5" name="debug">
             </div>
             <div class="button-container">
                 <div class="button-label">
                     <label>loop</label>
                 </div>
-                <div class="round-button"></div>
+                <button class="round-button loop-left"></button>
             </div>
             <div class="button-container">
                 <div class="button-label">
                     <label>loop</label>
                 </div>
-                <div class="round-button"></div>
+                <button class="round-button loop-right"></button>
             </div>
             <div class="button-container">
                 <div class="button-label">
                     <label>loop length</label>
                 </div>
-                <div class="square-button"></div>
+                <button class="square-button looplength-left">4</button>
             </div>
             <div class="button-container">
                 <div class="button-label">
                     <label>loop length</label>
                 </div>
-                <div class="square-button"></div>
+                <button class="square-button looplength-right">4</button>
             </div>
         </div>
     </main>
-    <div class="addsong">
+    <div class="addsong fade-in">
         <div class="addsong-container">
             <div class="addsong-searchbar-container">
                 <input type="search" placeholder="search anything" name="" id="addsong-searchbar" size="15">
@@ -110,14 +112,14 @@
                     <img src="./AlbumCoverPlaceholder.png" id="album-cover" alt="">
                 </div>
                 <div class="addsong-track-info-container">
-                    <label class="add-song-track-artist">PinkPantheress</label>
-                    <label class="add-song-track-songname">That boys a liar</label>
+                    <label class="add-song-track-artist">artist name</label>
+                    <label class="add-song-track-songname">song title</label>
                     <hr>
                     <label class="add-song-track-bpm secondary-text">BPM : --- BPM</label>
-                    <label class="add-song-track-key secondary-text">Key : A# Minor</label>
+                    <label class="add-song-track-key secondary-text">Key : ---</label>
                     <hr>
                     <label class="add-song-track-sp-text italic">Spotify :</label>
-                    <label class="add-song-track-sp-name secondary-text">PinkPantheress - that boys a liar</label>
+                    <label class="add-song-track-sp-name secondary-text">artist name - song title</label>
                 </div>
             </div>
             <div class="addsong-deckchose">

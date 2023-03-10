@@ -2,7 +2,7 @@ class MusicTrack {
 
     constructor(trackNumber) {
 
-        this.pg = createGraphics(width/2, height); //makes a PGraphics buffer 3 times the height of the canvas --> 1200 px
+        this.pg = createGraphics(width/2, height); //make buffer
 
         this.offsetX = trackNumber*this.pg.width;
         this.offsetY = 0;
@@ -11,12 +11,15 @@ class MusicTrack {
 
         this.createPlayPauseButton(trackNumber);
         this.createReverbButton(trackNumber);
-        // this.createLoopButton(trackNumber);
-        // this.createLoopLengthButton(trackNumber);
-        // this.createTempoButtons(trackNumber);
+        this.createLoopButton(trackNumber);
+        this.createLoopLengthButton(trackNumber);
+        this.createTempoButtons(trackNumber);
         this.createSearchBox(trackNumber);
+        this.createVolumeSlider();
 
         this.trackNumber = trackNumber;
+
+        select(`#load-${this.cssSide}`).mousePressed(() => soundScraper.loadTrackUp(this));
 
     }
 
@@ -40,6 +43,8 @@ class MusicTrack {
                 this.drawAudioWaveform(this.index, this.bass, this.snare);
                 this.drawTickLines();
 
+                this.sound.setVolume(this.volumeSlider.value());
+
                 select(`.bpm-${this.cssSide}`).html(this.bpm.toFixed(1));
                 
             }
@@ -52,8 +57,19 @@ class MusicTrack {
 
     metronome() {
         if (this.ticks && this.sound.currentTime() > this.ticks[this.tickCount]) {
-            console.log("TICK " + this.tickCount);
+            // console.log("TICK " + this.tickCount);
+            this.ledBlink();
             this.tickCount++;
+        }
+    }
+
+    ledBlink() {
+        let led = select(`.bpm-indicator-${this.cssSide}`);
+
+        if(led.style("visibility") == "hidden") {
+            led.style("visibility", "visible");
+        } else {
+            led.style("visibility", "hidden");
         }
     }
 
@@ -82,8 +98,6 @@ class MusicTrack {
 
     }
 
-
-
     createPlayPauseButton (trackNumber) {
 
         if (trackNumber == 0) {
@@ -95,8 +109,6 @@ class MusicTrack {
         this.button = select(`.play-${this.cssSide}`);
         this.button.mousePressed(this.playPause.bind(this));
 
-        select(`#load-${this.cssSide}`).mousePressed(() => loadTrackUp(client_id_d, url_d, this, tempSpotifyData));
-
     }
 
     createReverbButton(trackNumber) {
@@ -106,56 +118,54 @@ class MusicTrack {
 
         this.reverbButton = select(`.sync-${this.cssSide}`);
 
-        //when mouse pressed invoke reverbtoggle with this bind and pass in the text element as arguement
+        //when mouse pressed invoke reverbtoggle with this bind and pass in the text element as arguement for it to be able to change its color (on/off)
         this.reverbButton.mousePressed(this.reverbToggle.bind(this, select(`.sync-text-${this.cssSide}`))); 
     }
 
     createLoopButton (trackNumber) {
 
-        this.loopButton = new Clickable(trackNumber*this.pg.width*2,this.button.height+this.pg.height);
-        this.loopButton.text = "loop";
-        this.loopButton.textSize = 20;
-        this.loopButton.cornerRadius = 0;
-        this.loopButton.resize(this.pg.width, 100);
-        this.loopButton.onHover = function () {this.color = "lightgray"};
-        this.loopButton.onOutside = function () {this.color = "white"};
-        this.loopButton.onPress = this.loopToggle.bind(this);  
+        this.loopButton = select(`.loop-${this.cssSide}`);
+        this.loopButton.mousePressed(this.loopToggle.bind(this));
 
     }
 
     createLoopLengthButton (trackNumber) {
 
-        this.loopLengthButton = new Clickable(trackNumber*this.pg.width*2+this.pg.width,this.button.height+this.pg.height);
-        this.loopLengthButton.text = 4;
-        this.loopLengthButton.textSize = 20;
-        this.loopLengthButton.cornerRadius = 0;
-        this.loopLengthButton.resize(this.pg.width, 100);
-        this.loopLengthButton.onHover = function () {this.color = "lightgray"};
-        this.loopLengthButton.onOutside = function () {this.color = "white"};
-        this.loopLengthButton.onPress = this.loopLengthToggle.bind(this);
+        this.loopLengthButton = select(`.looplength-${this.cssSide}`);
+        this.loopLengthButton.mousePressed(this.loopLengthToggle.bind(this));
 
     }
 
     createTempoButtons(trackNumber) {
-        this.slider = createSlider(-100, 100, 0);
-        this.slider.position(trackNumber*this.pg.width*2,this.button.height*2+this.pg.height);
-        this.slider.size(this.pg.width*2, 100);
-        this.slider.changed(this.rateSlider.bind(this));
+
+        this.tempoMoreButton = select(`.bpm-more-${this.cssSide}`);
+        this.tempoMoreButton.mousePressed(this.rateSlider.bind(this, 0.1));
+        this.tempoLessButton = select(`.bpm-less-${this.cssSide}`);
+        this.tempoLessButton.mousePressed(this.rateSlider.bind(this, -0.1));
+        
+        // this.slider.changed(this.rateSlider.bind(this));
 
     }
 
     createSearchBox (trackNumber) {
 
+        //dont need this to be in musictrack.js can be put in soundcloudDownloader.js
         this.searchBox = select("#addsong-searchbar");
-        this.searchBox.attribute("onKeyDown", `searchBoxEnter(event)`);
+        this.searchBox.attribute("onKeyDown", `soundScraper.searchBoxEnter(event)`);
 
     }
 
-    rateSlider() { //change logic for it to change 0.1 bpm at a time with 2 buttons
+    createVolumeSlider () {
+        this.volumeSlider = select(`.vol-${this.cssSide} > input`);
+    }
 
+    rateSlider(value) { //change logic for it to change 0.1 bpm at a time with 2 buttons
+
+        console.log("RATESLIDER");
         if(this.bpm) {
             
-            this.bpm = (this.slider.value()/10)+this.initialBpm; //update display
+            this.bpm = this.bpm + value;
+            console.log(this.bpm);
             let rate = this.bpm/this.initialBpm; //calc real
 
             if (this.sound.rate() != 0) {
@@ -169,7 +179,7 @@ class MusicTrack {
     loopLengthToggle() {
 
         let loopLengths = [2,4,8,16];
-        let index = closestIndex(this.loopLengthButton.text, loopLengths);
+        let index = closestIndex(parseInt(this.loopLengthButton.html()), loopLengths);
 
         if(!this.isLooping) {
 
@@ -178,8 +188,8 @@ class MusicTrack {
 
         }
 
-        this.loopLengthButton.text = loopLengths[index];
-        this.loopLength = this.loopLengthButton.text;
+        this.loopLengthButton.html(loopLengths[index]);
+        this.loopLength = loopLengths[index];
 
     }
 
@@ -191,6 +201,7 @@ class MusicTrack {
             }
             if(!this.isLooping) {
 
+                console.log("IS NOT LOOPING");
                 this.loopStartTime = this.sound.currentTime();
                 this.closestTickForLoop = closestIndex(this.loopStartTime, this.ticks);
 
@@ -270,7 +281,8 @@ class MusicTrack {
             this.ticks = undefined;
             this.plotPoints = (e.buffer.length/e.buffer.sampleRate) * 100; //--> 441 samples per pixel or 10ms per pixel
             this.tickCount = 0;
-            // this.loopLength = this.loopLengthButton.text; //FIX / UNDERSTAND
+            this.loopLength = parseInt(this.loopLengthButton.html()); //FIX / UNDERSTAND
+            console.log(this.loopLength);
             this.essentiaAnalyseTrack(e);
             this.sound.play(0, 0, 0);
             this.sound.disconnect();
@@ -316,7 +328,7 @@ class MusicTrack {
 
     }
 
-    //eventually combine tick & waveform into 1 function
+    //eventually combine tick & waveform into 1 function --> no?
     drawTickLines() {
 
         this.pg.push(); //new drawing state for making the lines colored
@@ -324,7 +336,7 @@ class MusicTrack {
         this.pg.translate(0, this.sound.currentTime()*100);
 
         //draw beat detection ticks in white lines
-        for (let i = this.closestTick-5; i < this.closestTick+5; i++) {
+        for (let i = this.closestTick-6; i < this.closestTick+6; i++) {
 
             let x1 = 0;
             let y1 = this.pg.height/2 - this.ticks[i]*100;  

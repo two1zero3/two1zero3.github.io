@@ -1,76 +1,83 @@
-// MAKE A CLASS FOR ALL OF THIS SO U CAN STORE MEMORY STUFF
+class soundData {
 
-function searchBoxEnter(event) {
+  constructor () {
+
+    this.searchValue;
+    this.spotifyData;
+    this.spotifyAnalData;
+    this.soundCloudData;
+    this.client_id;
+    this.searchUrl;
+
+  }
+
+  searchBoxEnter(event) {
+
     if (event.key == "Enter") {
-        loadload(musicTrackL.searchBox.value());
+        this.loadTrackInfo(musicTrackL.searchBox.value());
     }
 
-}
+  }
 
-let spotifyTrackName;
-let tempSpotifyData;
-let url_d;
-async function loadload(searchValue) {
+  async loadTrackInfo(searchValue) {
 
     //get search results and pick first
 
-    const client_id = "Ya7cEWyTIYPsvqGiHRBACgpAZ7lVcZXs";
-    const searchUrl = new URL(`https://api-v2.soundcloud.com/search?q=${searchValue}&client_id=${client_id}&limit=20`);
+    this.client_id = "Ya7cEWyTIYPsvqGiHRBACgpAZ7lVcZXs";
+    this.searchUrl = new URL(`https://api-v2.soundcloud.com/search?q=${searchValue}&client_id=${this.client_id}&limit=20`);
 
-    const response = await fetch(proxyUrl + searchUrl);
+    const response = await fetch(proxyUrl + this.searchUrl);
     const data = await response.json();
 
-    const songJSON = data.collection.find(element => element.artwork_url != undefined);
-    const url = songJSON.media.transcodings.find(element => element.format.mime_type == "audio/mpeg").url;
+    this.soundCloudData = data.collection.find(element => element.artwork_url != undefined);
+    this.url = this.soundCloudData.media.transcodings.find(element => element.format.mime_type == "audio/mpeg").url;
 
-    if (songJSON.monetization_model == "SUB_HIGH_TIER") {
+    if (this.soundCloudData.monetization_model == "SUB_HIGH_TIER") {
         alert("Warning : due to Soundcloud Go limitations this track will only play the 30 first seconds");
     }
 
-    console.log(songJSON);
-
-    //SET ALL INFO IN HTML
-    select("#album-cover").attribute("src", songJSON.artwork_url);
-    select(".add-song-track-songname").html(songJSON.title);
-    select(".add-song-track-artist").html(songJSON.user.username);
-
     //set this.spotify as the data returned
-    getBpmFromSpotify(searchValue)
-        .then((data) => tempSpotifyData = data)
-        .then((data) => select(".add-song-track-bpm").html(`BPM : ${data.track.tempo}`))
-        .then(() => select(".add-song-track-sp-name").html(spotifyTrackName));
-
-    //prime the buttons for loading up the current track
-    // select("#load-left").mousePressed(() => loadTrackUp(client_id, url, musicTrackL, tempSpotifyData));
-    // select("#load-right").mousePressed(() => loadTrackUp(client_id, url, musicTrackR, tempSpotifyData));
-    url_d = url;
-
-    console.log("LOAD FUCKING LOAD");
-    
-}
-
-function loadTrackUp (client_id, url, deck, spotify) {
-
-  if (url_d) {
-
-    // console.log(client_id, url, deck, spotify);
-    fetchSong(client_id, url, deck);
-    deck.spotify = spotify;
-
+    this.getBpmFromSpotify(searchValue)
+        .then((data) => this.spotifyAnalData = data)
+        .then(() => this.loadHTMLinfo(this.soundCloudData, this.spotifyData, this.spotifyAnalData));
   }
-}
 
-async function fetchSong (client_id, url, deck) {
+  loadHTMLinfo (soundCloudData, spotifyData, spotifyAnalData) {
+
+    select("#album-cover").attribute("src", soundCloudData.artwork_url);
+    select(".add-song-track-songname").html(soundCloudData.title);
+    select(".add-song-track-artist").html(soundCloudData.user.username);
+
+    console.log(spotifyData);
+
+    select(".add-song-track-bpm").html(`BPM : ${spotifyAnalData.track.tempo}`);
+    select(".add-song-track-sp-name").html(spotifyData.artists[0].name + " - " + spotifyData.name);
+    
+  }
+
+  loadTrackUp (deck) {
+
+    if (this.url) {
+
+      addSong();
+      this.fetchSong(this.client_id, this.url, deck);
+      deck.spotify = this.spotifyAnalData;
+  
+    }
+  }
+
+  async fetchSong (client_id, url, deck) {
 
     const songUrl = new URL(`${url}?client_id=${client_id}`);
 
     const response = await fetch(proxyUrl + songUrl);
     const data = await response.json();
 
-    fetchHLS(data.url, deck); //fetch the HLS file, parse it and extract the parts URLs
-}
+    this.fetchHLS(data.url, deck); //fetch the HLS file, parse it and extract the parts URLs
+  
+  }
 
-async function fetchHLS (url, deck) {
+  async fetchHLS (url, deck) {
     
     const response = await fetch(proxyUrl + url);
 
@@ -87,11 +94,11 @@ async function fetchHLS (url, deck) {
         
     }
 
-    fetchParts(urls, deck); //from the list of small mp3 parts concat it with cronker
+    this.fetchParts(urls, deck); //from the list of small mp3 parts concat it with cronker
     
-}
+  }
 
-async function fetchParts (urls, deck) {
+  async fetchParts (urls, deck) {
 
     const crunker = new Crunker.default();
 
@@ -104,9 +111,8 @@ async function fetchParts (urls, deck) {
 
     //use cronker to concat all the audiobuffers and pass it to a DJ track
 
-}
-
-async function spotifyGetAccessToken() {
+  }
+  async spotifyGetAccessToken() {
 
     const client_id = 'd4a0cc60bd7f4f94977b99d626972221';
     const client_secret = '6fd7492de63942cc8f33f4aaa8f41c1a';
@@ -130,9 +136,9 @@ async function spotifyGetAccessToken() {
     }
   }
 
-async function getBpmFromSpotify(searchQuery) {
+  async getBpmFromSpotify(searchQuery) {
 
-    const ACCESS_TOKEN = await spotifyGetAccessToken();
+    const ACCESS_TOKEN = await this.spotifyGetAccessToken();
 
     console.log(ACCESS_TOKEN);
 
@@ -146,8 +152,8 @@ async function getBpmFromSpotify(searchQuery) {
       .then(response => response.json())
       .then(data => {
         if (data.tracks.items.length > 0) {
-          const trackId = data.tracks.items[0].id;
-          spotifyTrackName = data.tracks.items[0].artists[0].name + " - " + data.tracks.items[0].name;
+          this.spotifyData = data.tracks.items[0];
+          const trackId = this.spotifyData.id;
           const audioFeaturesUrl = `https://api.spotify.com/v1/audio-analysis/${trackId}`;
 
           return fetch(audioFeaturesUrl, { headers })
@@ -157,4 +163,6 @@ async function getBpmFromSpotify(searchQuery) {
           throw new Error('No track found with the provided name');
         }
       });
+  }
+  
 }

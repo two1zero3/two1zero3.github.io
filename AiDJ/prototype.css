@@ -33,9 +33,9 @@ main {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr; 
     grid-template-rows: 1fr 1fr 1fr 1fr;
-    justify-content: center;
-    /* justify-items: center; */
-    gap: 10px 10px; 
+    justify-content: center; 
+    justify-items: center;
+    /* gap: 10px 10px;  */
     grid-template-areas: 
     "slider-l . . slider-r"
     "slider-l . . slider-r"
@@ -82,7 +82,7 @@ header {
     content:" BPM";
 }
 /* the text inside the div in header */
-.bpm-indicator {
+.bpm-indicator-left, .bpm-indicator-right {
     height: 3vh;
     width: 3vh;
     background: black;
@@ -256,7 +256,7 @@ hr {
 }
 
 div > input[type=range] {
-    rotate: 90deg;
+    rotate: -90deg;
 }
 
 /* ALL LABELS */
@@ -267,24 +267,27 @@ div > label {
     color:white;
 }
 
-.slider-l { 
+.slider-left  { 
     grid-area: slider-l; 
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    justify-items: center;
+}
+.slider-right { 
+    grid-area: slider-r;
 }
 
-.slider-r { 
-    grid-area: slider-r;
-    display: flex;
+.display-grid {
+    display: grid;
     justify-content: center;
     align-content: center;
     align-items: center;
     justify-items: center;
 }
-.vol-l { 
+.max-size-button {
+    width: 80px;
+    height: 50px;
+    margin: 10px;
+}
+
+.vol-left { 
     grid-area: vol-l; 
     display: flex;
     justify-content: center;
@@ -292,7 +295,7 @@ div > label {
     align-items: center;
     justify-items: center;
 }
-.vol-r { 
+.vol-right { 
     grid-area: vol-r; 
     display: flex;
     justify-content: center;
@@ -318,8 +321,8 @@ input[type=range] {
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 1vh;
-    height: 5vw;
+    width: 3vh;
+    height: 10vw;
     background: red;
     cursor: pointer;
 }
@@ -328,4 +331,20 @@ input[type=range]::-moz-range-thumb {
     height: 5vw;
     background: red;
     cursor: pointer;
+}
+@keyframes fade-in {
+
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+    99% {
+        opacity: 0;
+        visibility: visible;
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+
 }

@@ -5,6 +5,7 @@
 var canvas;
 var musicTrackL; // the current left track playing --> refer to musicTrack.js constructor
 var musicTrackR; // the current right track playing --> refer to musicTrack.js constructor
+var soundScraper; //the sound data collection class
 var audioCtx;  // define AudioContext as 44.1khz --> hardcoded in p5.sound.js to simplify audio processing by Essentia
 
 var drag = 0;
@@ -12,8 +13,6 @@ var bpmL;
 var bpmR;
 
 var svg;
-const client_id_d = "Ya7cEWyTIYPsvqGiHRBACgpAZ7lVcZXs";
-
 const proxyUrl = 'https://corsproxy.io/?';
 
 var mouseWasPressed;
@@ -30,10 +29,11 @@ function setup() {
 
     pixelDensity(displayDensity());
 
-    canvas = createCanvas(windowWidth,400);
+    canvas = createCanvas(windowWidth,windowHeight/3);
     canvas.parent("#Canvas");
 
     //CREATE LEFT AND RIGHT TRACKS FROM CLASS
+    soundScraper = new soundData();
     musicTrackL = new MusicTrack(0);
     musicTrackR = new MusicTrack(1);
     canvas.drop( (e) => {musicTrackL.dropHandler(e)} );
@@ -80,13 +80,12 @@ function mousePressed() {
 }
 
 function addSong () {
+    //show or hide the add song menu
     if(select(".addsong").style("visibility") == "hidden") {
         select(".addsong").style("visibility", "visible");
     } else {
         select(".addsong").style("visibility", "hidden");
     }
-    
-    console.log("CLICKED ADDSONG")
 }
 
 const closestIndex = (num, arr) => {
