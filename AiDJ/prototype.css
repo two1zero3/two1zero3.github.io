@@ -14,12 +14,23 @@
     overflow: hidden;
     font-family: 'Necto Mono';
 }
+:root {
+    --orange-accent: rgb(255, 102, 0);   /*  rgb(255, 102, 0)  */
+    --button-background: rgb(245, 245, 245);
+    --background-color: #087E8B; /* rgb(168, 186, 188) */
+    --plus-button: #2D3142;
+    --plus-button-hover: #ADA8BE;
+    --label-color: rgb(255, 255, 255);
+    --main-track-info-text: white;
+}
 html,body {
     width: 100%;
     height: 100%;
     overflow: hidden;
     position: fixed;
-    background-color: #999;
+    /* background: radial-gradient(circle, rgba(45,44,42,1) 0%, rgba(59,37,28,1) 39%, rgba(0,54,65,1) 100%); */
+    background-color: var(--background-color);
+
 }
 body {
     min-height: 100vh;
@@ -35,21 +46,68 @@ html {
 main {
     height: calc(100% - 5vh);
     display: grid;
+    margin-top: 10px;
     /* align-content: end; */
 }
 
+/* PLAY AROUND WITH THIS TO STYLE BUTTONS BELOW*/
+button { 
+    background-color: white;
+    border: none;
+}
+button:hover {
+    background-color: #b3b3b3;
+}
+
+.sync-left:hover, .sync-right:hover {
+    background-color: var(--button-background);
+}
+
+.sync-left, .sync-right {
+
+    border-radius: 50%;
+    z-index: 1;
+
+    grid-area: a;
+    box-sizing: border-box;
+
+    width: 5vmin !important;
+    height: 5vmin !important;
+
+    background-color: var(--button-background);
+    border: 1px solid #CACACA;
+
+    /* button/shadows-soft */
+    /* box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.25), -3px -3px 5px rgba(255, 255, 255, 0.25); */
+
+}
+.sync-button-container {
+    width: 15vmin; 
+    height: 15vmin;
+    display: grid; 
+    grid-template-columns: 1fr; 
+    grid-template-rows: 1fr; 
+    gap: 0px 0px; 
+    grid-template-areas: "a"; 
+    justify-items: center;
+    align-items: center;
+}
+
+/*the grid that places all the buttons and the canvas*/
 .bottom {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr; 
-    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
     justify-content: center; 
     justify-items: center;
-    /* gap: 10px 10px;  */
+    gap: 10px 10px;
     grid-template-areas: 
-    "slider-l . . slider-r"
-    "slider-l . . slider-r"
-    "vol-l . . vol-r"
-    "vol-l . . vol-r"; 
+    "fx-l p5Canvas p5Canvas fx-r"
+    "fx-l p5Canvas p5Canvas fx-r"
+    "loop-l play-l play-r loop-r"
+    "loop-l sync-l sync-r loop-r"
+    "eq-l vol-l vol-r eq-r"
+    "eq-l vol-l vol-r eq-r";
 }
 
 /* all header elements */
@@ -73,16 +131,27 @@ header {
 /* the + button */
 .header-div > button {
     width: 33vw;
-    height: 5vh;
-    border-radius: 20px;
+    height: 4vh;
+
+    margin: 10px;
+
     color:white;
     text-decoration:none;
-    background-color:#44c767;
+    background-color: var(--plus-button);
+
     border: none;
     font-size: 2em;
+    border-radius: 10px;
+
+    /* CENTER THE + BUTTON */
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    justify-items: center;
 }
 .header-div > button:hover {
-    background-color:#2f8846;
+    background-color:var(--plus-button-hover);
 }
 .header-div > label {
     font-size: 3vw;
@@ -94,11 +163,25 @@ header {
 .bpm-indicator-left, .bpm-indicator-right {
     height: 3vh;
     width: 3vh;
-    background: black;
-    background: radial-gradient(#e66465, #9198e5);
+    display: grid;
+    align-items: center;
+    justify-items: center;
+
+    /* background: black;
+    background: radial-gradient(#e66465, #9198e5); */
+}
+.bpm-percent {
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    background: var(--orange-accent);
 }
 
-/* ADDSONG STYLING */
+.looplength-left, .looplength-right {
+    font-size: 1em;
+}
+
+/* ADD SONG STYLING */
 
 .addsong {
     display: block;
@@ -111,6 +194,7 @@ header {
     width: 90vw;
     height: 80vh;
     border-radius: 20px;
+    z-index: 100;
 }
 
 .addsong-container {
@@ -124,46 +208,107 @@ header {
     width: 100%;
 }
 
-.addsong-searchbar-container {
+
+
+/* SEARCHBAR STYLING */
+.searchbar-container {
     display: flex;
     justify-content: center;
-    align-content: start;
     align-items: center;
     justify-items: center;
-    width: 100%;
+    width: calc(100% - 20px);  /*  20 px because you want to substract the 10px from the margin aswell as the 10px from the container padding */
     height: 5vh;
     margin: 10px;
     background-color: #535353;
-    border-radius: 20px;
+    border-radius: 10px;
 }
 
-.addsong-searchbar-container > input {
+.searchbar-container > input {
     background: transparent;
     flex: 1;
     border: 0;
     outline: none;
-    padding: 24px 20px;
+    padding: 0 20px;
     font-size: 20px;
     color: #cac7ff;
+    /* text-align: center; */
 }
 
-.addsong-track {
+
+
+/* TRACK INFO --> IMAGE AND TITLE ETC */
+.track-container {
+    display: grid; 
+
     width: 100%;
     height: 100%;
-    padding: 10px;
-    display: flex;
-    justify-content: center;
+
     align-content: center;
     align-items: center;
     justify-items: center;
-    border-radius: 20px;
+    
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: 1fr 1fr; 
+
+    padding: 10px;
+    gap: 0px 0px; 
+
+    grid-template-areas: 
+      "album-cover soundcloud-info"
+      "track-metadata spotify-info";
 }
 
-.addsong-track-image-container > img {
-    width: 22vw;
+/* TRACK COVER ART */
+.album-cover-div { 
+    grid-area: album-cover;
+    margin: 10px;
+}
+.album-cover-div > img {
+    width: 30vmin;
     border-radius: 20px;
+    aspect-ratio: 1/1;
 }
 
+/* SOUNDCLOUD - SONG TITLE AND ARTIST NAME */
+.soundcloud-info { 
+    grid-area: soundcloud-info;
+}
+.song-name::before {
+    content: "Single - ";
+}
+
+/* TRACK BPM & KEY */
+.track-metadata { 
+    grid-area: track-metadata;
+}
+
+/* FOR ALL THE GRID BOXES CONTAINING INFO --> BPM ONE / SOUNDCLOUD ONE / SPOTIFY / ALBUM COVER */
+.info-container {
+    display: grid;
+
+    align-content: center;
+    align-items: center;
+    justify-items: center;
+    justify-content: stretch;
+
+    background-color: #393939;
+    border-radius: 20px;
+    margin: 10px;
+}
+
+
+
+
+
+
+.primary-text {
+    color: var(--main-track-info-text) !important;
+    font-size: 0.8em;
+}
+.secondary-text {
+    color: #a9a9a9 !important;
+    font-size: 0.8em;
+}
 hr {
     width: 75%;
     border: none;
@@ -173,101 +318,103 @@ hr {
     margin: 5px;
 }
 
-.add-song-track-artist {
-    font-size: 2.5vw;
-}
-.add-song-track-songname {
-    font-style: italic !important;
-    color: #a9a9a9;
-}
-.add-song-track-songname::before {
-    content: "Single - ";
-}
-
-.one-em {
-   font-size: 3vw;
-   margin: 5px;
-}
-.secondary-text {
-    color: #a9a9a9;
-}
-.addsong-track-info-container > label {
-    padding-top: 3px;
-    padding-bottom: 3px;
-}
-
-.addsong-track-image-container {
-    margin: 10px;
-}
-.addsong-track-info-container {
-    display: grid;
-    justify-content: stretch;
-    width: 50%;
-    height: 90%;
-    font-size: 2vw;
-    align-content: center;
-    align-items: center;
-    justify-items: center;
-    background-color: #393939;
-    border-radius: 20px;
-}
 .spotify-checkbox-container {
     display: flex;
+
     align-content: center;
     align-items: center;
     justify-items: center;
     justify-content: stretch;
+
     border: 1px solid blue;
+    border-radius: 20px;
+
     margin: 5px;
     padding: 5px;
-    border-radius: 20px;
+    
+    font-size: 0.8em;
+
     background-color: rgb(124, 122, 255);
 }
-.spotify-checkbox-container > label {
-    padding: 5px;
+.spotify-checkbox-container > * {
+    margin: 1vw;
+    padding: 0;
 }
 
 /* DECK CHOSE */
 .addsong-deckchose {
-    display: flex;
+
+    display: grid; 
     align-content: center;
     align-items: center;
     justify-items: center;
-    justify-content: center;
+    justify-content: space-around;
+    
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: 1fr; 
+    gap: 0px 0px; 
+
     width: 100%;
-    height: 20vh;
-    gap: 10px 10vw;
+    padding: 10px;
 }
-.addsong-deckchose > * {
-    width: 30%;
-    height: 50%;
-    border-radius: 20px;
-    border: none;
-    background-color: #000000;
+.addsong-deckchose > * > label {
+    padding: 10px;
+    margin: 10px;
+    color: var(--main-track-info-text);
     font-size: 1em;
-    color:white;
+}
+.load-left, .load-right {
+    padding: 10px;
+    /* border: solid 1px var(--orange-accent); */
+    border-radius: 20px;
 }
 
 .italic {
     font-style: italic;
 }
 
+/* NEW BUTTON BELOW */
+
+.new-button-container {
+    width: 20vmin; 
+    height: 20vmin;
+    display: grid; 
+    grid-template-columns: 1fr; 
+    grid-template-rows: 1fr; 
+    gap: 0px 0px; 
+    grid-template-areas: "a"; 
+    justify-items: center;
+    align-items: center;
+}
+
+.new-button {
+    /* Ellipse */
+    border-radius: 3vw;
+    z-index: 1;
+
+    grid-area: a;
+    box-sizing: border-box;
+
+    width: 16vmin;
+    height: 16vmin;
+
+    background-color: var(--button-background);
+    border: 1px solid #CACACA;
+
+    /* button/shadows-soft */
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.25), -3px -3px 5px rgba(255, 255, 255, 0.25);
+
+    /* CENTER THE SVG */
+    display:grid;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    justify-items: center;
+    
+}
+
+
 /* BUTTON AND SLIDER STYLING */
-
-.round-button {
-    height: 8vh;
-    width: 8vh;
-    background-color: #ffffff;
-    border-radius: 50%;
-    box-shadow: 0px 3px 10px rgb(103, 103, 103);
-}
-
-.square-button {
-    height: 40px;
-    width: 75px;
-    background-color: #ffffff;
-    box-shadow: 0px 3px 10px rgb(103, 103, 103);
-}
 
 .button-container {
     display: grid;
@@ -277,24 +424,98 @@ hr {
     justify-items: center;
 }
 
-div > input[type=range] {
-    rotate: -90deg;
-}
-
 /* ALL LABELS */
 div > label {
     font-size: 0.8em;
     text-align: center;
     padding: 10px;
-    color:white;
+    color:var(--label-color);
 }
 
-.slider-left  { 
-    grid-area: slider-l; 
+/* DEFINE GRID AREAS */
+
+.fx-left  { 
+    grid-area: fx-l; 
 }
-.slider-right { 
-    grid-area: slider-r;
+.fx-right { 
+    grid-area: fx-r;
 }
+.loop-left-div {
+    grid-area: loop-l;
+}
+.loop-right-div {
+    grid-area: loop-r;
+}
+.vol-left-div {
+    grid-area: vol-l; 
+}
+.vol-right-div {
+    grid-area: vol-r; 
+}
+.waveforms {
+    grid-area: p5Canvas;
+}
+.play-left-div {
+    grid-area: play-l;
+}
+.play-right-div {
+    grid-area: play-r;
+}
+.sync-left-div {
+    grid-area: sync-l;
+}
+.sync-right-div {
+    grid-area: sync-r;
+}
+.eq-left-div {
+    grid-area: eq-l;
+}
+.eq-right-div {
+    grid-area: eq-r;
+}
+
+/* SLIDER STYLING BELOW */
+input[type=range] {
+    rotate: -90deg;
+    -webkit-appearance: none;
+    outline: none;
+    background: var(--button-background);
+    border-radius: 10px;
+    aspect-ratio: 1vh/1vw;
+    width: 20vh;
+    height: 4vw;
+    overflow: visible;
+    margin-bottom: 5vh;
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 3vh;
+    height: 17vw;
+    background: var(--orange-accent);
+    cursor: pointer;
+    border-radius: 10px;
+}
+input[type=range]::-moz-range-thumb {
+    width: 3vh;
+    height: 17vw;
+    background: var(--orange-accent);
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.vol-left-div > input::-webkit-slider-thumb , .vol-right-div > input::-webkit-slider-thumb  {
+    background: var(--plus-button);
+}
+
+/* STYLIGN THE P5 CANVAS CONTAINER */
+.waveforms {
+        /* BUG FIX FOR BORDER RADIUS NOT WORKING SAFARI */
+        transform: translate3d(0,0,0);
+        border-radius: 10px;
+}
+
+/* MAKES THE ORANGE BG AND DEFINES SECTIONS LIKE FX AND LOOP */
 
 .display-grid {
     display: grid;
@@ -302,23 +523,12 @@ div > label {
     align-content: center;
     align-items: center;
     justify-items: center;
-}
-.max-size-button {
-    width: 80px;
-    height: 50px;
-    margin: 10px;
+    background-color: var(--orange-accent);
+    /* border: 1px solid black; */
+    border-radius: 2vmin;
 }
 
-.vol-left { 
-    grid-area: vol-l; 
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    justify-items: center;
-}
-.vol-right { 
-    grid-area: vol-r; 
+.vol-left-div, .vol-right-div {  
     display: flex;
     justify-content: center;
     align-content: center;
@@ -326,42 +536,15 @@ div > label {
     justify-items: center;
 }
 
-.button-label {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    justify-items: center;
-}
-
-/* SLIDER STYLING BELOW */
-input[type=range] {
-    -webkit-appearance: none;
-    outline: none;
-    background: black;
-}
-input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 3vh;
-    height: 10vw;
-    background: red;
-    cursor: pointer;
-}
-input[type=range]::-moz-range-thumb {
-    width: 1vh;
-    height: 5vw;
-    background: red;
-    cursor: pointer;
-}
 .hidden {
     visibility: hidden;
     opacity: 0;
-    transition: visibility 0s linear 0.5s, opacity 0.5s ease-in-out;
+    transition: visibility 0.3s linear 0.3s, opacity 0.3s ease-in-out;
 }
 
 .visible {
     visibility: visible;
+    transition: visibility 0.3s linear, opacity 0.3s ease-in-out 0.3s;
     opacity: 1;
-    transition: visibility 0s linear, opacity 0.5s ease-in-out 0.5s;
+    
 }

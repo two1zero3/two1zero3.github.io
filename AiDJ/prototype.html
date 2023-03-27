@@ -18,119 +18,221 @@
     <script src="./main.js"></script>
     <script src="./musicTrack.js"></script>
     <script src="./soundcloudDownloader.js"></script>
+    <script src="./createDeckButtons.js"></script>
+    <script src="./syncTracks.js"></script>
     <header>
         <div class="header-div">
             <label class="bpm-left">---</label>
-            <div class="bpm-indicator-left"></div>
+            <div class="bpm-indicator-left">
+                <div class="bpm-percent"></div>
+            </div>
         </div>
         <div class="header-div">
             <button onclick="addSong()">+</button>
         </div>
         <div class="header-div">
             <label class="bpm-right">---</label>
-            <div class="bpm-indicator-right"></div>
+            <div class="bpm-indicator-right">
+                <div class="bpm-percent"></div>
+            </div>
         </div>
     </header>
     <main>
-        <div class="waveforms" id="p5Elements">
-                <div id="Canvas" style="grid-area: Canvas;">
-        </div>
-        </div>
         <div class="bottom">
-            <div class="slider-left display-grid">
-                <label>bpm</label>
-                <button class="max-size-button bpm-more-left">+</button>
-                <button class="max-size-button bpm-less-left">-</button>
-            </div>
-            <div class="button-container">
-                <div class="button-label">
-                    <label>play / pause</label>
+            <div class="waveforms" id="p5Elements">
+                <div id="Canvas" style="grid-area: Canvas;"> 
+                    <!-- insert p5 canvas here -->
                 </div>
-                <button class="round-button play-left"></button>
             </div>
-            <div class="button-container">
-                <div class="button-label">
-                    <label>play / pause</label>
+            <div class="fx-left display-grid">
+                <label>fx</label>
+                <div class="new-button-container">
+                    <button class="new-button reverb-left">
+                        <svg width="10vmin" height="10vmin" viewBox="0 0 86 86" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="43" cy="43" r="43" fill="#ECE9DF"/>
+                            <path d="M72 43C72 59.0163 59.0163 72 43 72C26.9837 72 14 59.0163 14 43C14 26.9837 26.9837 14 43 14C59.0163 14 72 26.9837 72 43ZM16.9 43C16.9 57.4146 28.5854 69.1 43 69.1C57.4146 69.1 69.1 57.4146 69.1 43C69.1 28.5854 57.4146 16.9 43 16.9C28.5854 16.9 16.9 28.5854 16.9 43Z" fill="#EC845C"/>
+                            <path d="M62 43C62 53.4934 53.4934 62 43 62C32.5066 62 24 53.4934 24 43C24 32.5066 32.5066 24 43 24C53.4934 24 62 32.5066 62 43ZM26.85 43C26.85 51.9194 34.0806 59.15 43 59.15C51.9194 59.15 59.15 51.9194 59.15 43C59.15 34.0806 51.9194 26.85 43 26.85C34.0806 26.85 26.85 34.0806 26.85 43Z" fill="#EC845C"/>
+                            <path d="M53 43C53 48.5228 48.5228 53 43 53C37.4772 53 33 48.5228 33 43C33 37.4772 37.4772 33 43 33C48.5228 33 53 37.4772 53 43ZM35.6 43C35.6 47.0869 38.9131 50.4 43 50.4C47.0869 50.4 50.4 47.0869 50.4 43C50.4 38.9131 47.0869 35.6 43 35.6C38.9131 35.6 35.6 38.9131 35.6 43Z" fill="#EC845C"/>
+                        </svg>                            
+                    </button>
                 </div>
-                <button class="round-button play-right"></button>
-            </div>
-            <div class="slider-right display-grid">
-                <label>bpm</label>
-                <button class="max-size-button bpm-more-right">+</button>
-                <button class="max-size-button bpm-less-right">-</button>
-            </div>
-            <div class="vol-left">
-                <input type="range" value="100" step="5" name="debug" >
-            </div>
-            <div class="button-container">
-                <div class="button-label">
-                    <label class="sync-text-left">sync</label>
+                <div class="new-button-container">
+                    <button class="new-button delay-left">
+                        <svg width="10vmin" height="10vmin" viewBox="0 0 86 86" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="43" cy="43" r="43" fill="#ECE9DF"/>
+                            <rect x="19.5" y="32.5" width="35" height="36" rx="1.5" stroke="#EC845C" stroke-width="3" stroke-linejoin="round"/>
+                            <rect x="29.5" y="22.5" width="35" height="36" rx="1.5" stroke="#EC845C" stroke-width="3" stroke-linejoin="round"/>
+                        </svg>                            
+                    </button>
                 </div>
-                <button class="round-button sync-left"></button>
             </div>
-            <div class="button-container">
-                <div class="button-label">
-                    <label class="sync-text-right">sync</label>
+            <div class="button-container play-left-div">
+                <div class="new-button-container">
+                    <button class="new-button play-left">
+                        <svg width="10vmin" height="10vmin" viewBox="0 0 86 86" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="43" cy="43" r="43" fill="#ECE9DF"/>
+                            <path d="M56 39.5359C58.6667 41.0755 58.6667 44.9245 56 46.4641L39.5 55.9904C36.8333 57.53 33.5 55.6055 33.5 52.5263L33.5 33.4737C33.5 30.3945 36.8333 28.47 39.5 30.0096L56 39.5359Z" fill="#EC845C"/>
+                        </svg>
+                    </button>
                 </div>
-                <button class="round-button sync-right"></button>
             </div>
-            <div class="vol-right">
-                <input type="range" value="100" step="5" name="debug">
-            </div>
-            <div class="button-container">
-                <div class="button-label">
-                    <label>loop</label>
+            <div class="button-container play-right-div">
+                <div class="new-button-container">
+                    <button class="new-button play-right">
+                        <svg width="10vmin" height="10vmin" viewBox="0 0 86 86" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="43" cy="43" r="43" fill="#ECE9DF"/>
+                            <path d="M56 39.5359C58.6667 41.0755 58.6667 44.9245 56 46.4641L39.5 55.9904C36.8333 57.53 33.5 55.6055 33.5 52.5263L33.5 33.4737C33.5 30.3945 36.8333 28.47 39.5 30.0096L56 39.5359Z" fill="#EC845C"/>
+                        </svg>
+                    </button>
                 </div>
-                <button class="round-button loop-left"></button>
             </div>
-            <div class="button-container">
-                <div class="button-label">
-                    <label>loop</label>
+            <div class="fx-right display-grid">
+                <label>fx</label>
+                <div class="new-button-container">
+                    <button class="new-button reverb-right">
+                        <svg width="10vmin" height="10vmin" viewBox="0 0 86 86" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="43" cy="43" r="43" fill="#ECE9DF"/>
+                            <path d="M72 43C72 59.0163 59.0163 72 43 72C26.9837 72 14 59.0163 14 43C14 26.9837 26.9837 14 43 14C59.0163 14 72 26.9837 72 43ZM16.9 43C16.9 57.4146 28.5854 69.1 43 69.1C57.4146 69.1 69.1 57.4146 69.1 43C69.1 28.5854 57.4146 16.9 43 16.9C28.5854 16.9 16.9 28.5854 16.9 43Z" fill="#EC845C"/>
+                            <path d="M62 43C62 53.4934 53.4934 62 43 62C32.5066 62 24 53.4934 24 43C24 32.5066 32.5066 24 43 24C53.4934 24 62 32.5066 62 43ZM26.85 43C26.85 51.9194 34.0806 59.15 43 59.15C51.9194 59.15 59.15 51.9194 59.15 43C59.15 34.0806 51.9194 26.85 43 26.85C34.0806 26.85 26.85 34.0806 26.85 43Z" fill="#EC845C"/>
+                            <path d="M53 43C53 48.5228 48.5228 53 43 53C37.4772 53 33 48.5228 33 43C33 37.4772 37.4772 33 43 33C48.5228 33 53 37.4772 53 43ZM35.6 43C35.6 47.0869 38.9131 50.4 43 50.4C47.0869 50.4 50.4 47.0869 50.4 43C50.4 38.9131 47.0869 35.6 43 35.6C38.9131 35.6 35.6 38.9131 35.6 43Z" fill="#EC845C"/>
+                        </svg>                            
+                    </button>
                 </div>
-                <button class="round-button loop-right"></button>
+                <div class="new-button-container">
+                    <button class="new-button delay-right">
+                        <svg width="10vmin" height="10vmin" viewBox="0 0 86 86" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="43" cy="43" r="43" fill="#ECE9DF"/>
+                            <rect x="19.5" y="32.5" width="35" height="36" rx="1.5" stroke="#EC845C" stroke-width="3" stroke-linejoin="round"/>
+                            <rect x="29.5" y="22.5" width="35" height="36" rx="1.5" stroke="#EC845C" stroke-width="3" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
-            <div class="button-container">
-                <div class="button-label">
-                    <label>loop length</label>
+            <div class="button-container sync-left-div">
+                <label>sync</label>
+                <div class="sync-button-container">
+                    <button class="sync-left"></button>
                 </div>
-                <button class="square-button looplength-left">4</button>
             </div>
-            <div class="button-container">
-                <div class="button-label">
-                    <label>loop length</label>
+            <div class="button-container sync-right-div">
+                <label>sync</label>
+                <div class="sync-button-container">
+                    <button class="sync-right"></button>
                 </div>
-                <button class="square-button looplength-right">4</button>
+            </div>
+            <div class="display-grid loop-left-div">
+                <label>loop</label>
+                <div class="button-container">
+                    <div class="new-button-container">
+                        <button class="new-button loop-left">
+                            <svg width="10vmin" height="10vmin" viewBox="0 0 86 86" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="43" cy="43" r="43" fill="#ECE9DF"/>
+                                <path d="M18 25.5C17.1716 25.5 16.5 26.1716 16.5 27C16.5 27.8284 17.1716 28.5 18 28.5V25.5ZM68 27H69.5C69.5 26.1716 68.8284 25.5 68 25.5V27ZM66.9393 50.5607C67.5251 51.1464 68.4749 51.1464 69.0607 50.5607L78.6066 41.0147C79.1924 40.4289 79.1924 39.4792 78.6066 38.8934C78.0208 38.3076 77.0711 38.3076 76.4853 38.8934L68 47.3787L59.5147 38.8934C58.9289 38.3076 57.9792 38.3076 57.3934 38.8934C56.8076 39.4792 56.8076 40.4289 57.3934 41.0147L66.9393 50.5607ZM18 28.5H68V25.5H18V28.5ZM66.5 27V49.5H69.5V27H66.5Z" fill="#EC845C"/>
+                                <path d="M68 60C68.8284 60 69.5 59.3284 69.5 58.5C69.5 57.6716 68.8284 57 68 57L68 60ZM18 58.5L16.5 58.5C16.5 59.3284 17.1716 60 18 60L18 58.5ZM19.0607 34.9393C18.4749 34.3535 17.5251 34.3535 16.9393 34.9393L7.3934 44.4853C6.80761 45.0711 6.80761 46.0208 7.3934 46.6066C7.97919 47.1924 8.92893 47.1924 9.51472 46.6066L18 38.1213L26.4853 46.6066C27.0711 47.1924 28.0208 47.1924 28.6066 46.6066C29.1924 46.0208 29.1924 45.0711 28.6066 44.4853L19.0607 34.9393ZM68 57L18 57L18 60L68 60L68 57ZM19.5 58.5L19.5 36L16.5 36L16.5 58.5L19.5 58.5Z" fill="#EC845C"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="button-container">
+                    <div class="new-button-container">
+                        <button class="new-button looplength-left">4</button> <!-- <sub>2</sub>..4..<sub>8</sub> -->
+                    </div>
+                </div>
+            </div>
+            <div class="display-grid loop-right-div">
+                <label>loop</label>
+                <div class="button-container">
+                    <div class="new-button-container">
+                        <button class="new-button loop-right">
+                            <svg width="10vmin" height="10vmin" viewBox="0 0 86 86" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="43" cy="43" r="43" fill="#ECE9DF"/>
+                                <path d="M18 25.5C17.1716 25.5 16.5 26.1716 16.5 27C16.5 27.8284 17.1716 28.5 18 28.5V25.5ZM68 27H69.5C69.5 26.1716 68.8284 25.5 68 25.5V27ZM66.9393 50.5607C67.5251 51.1464 68.4749 51.1464 69.0607 50.5607L78.6066 41.0147C79.1924 40.4289 79.1924 39.4792 78.6066 38.8934C78.0208 38.3076 77.0711 38.3076 76.4853 38.8934L68 47.3787L59.5147 38.8934C58.9289 38.3076 57.9792 38.3076 57.3934 38.8934C56.8076 39.4792 56.8076 40.4289 57.3934 41.0147L66.9393 50.5607ZM18 28.5H68V25.5H18V28.5ZM66.5 27V49.5H69.5V27H66.5Z" fill="#EC845C"/>
+                                <path d="M68 60C68.8284 60 69.5 59.3284 69.5 58.5C69.5 57.6716 68.8284 57 68 57L68 60ZM18 58.5L16.5 58.5C16.5 59.3284 17.1716 60 18 60L18 58.5ZM19.0607 34.9393C18.4749 34.3535 17.5251 34.3535 16.9393 34.9393L7.3934 44.4853C6.80761 45.0711 6.80761 46.0208 7.3934 46.6066C7.97919 47.1924 8.92893 47.1924 9.51472 46.6066L18 38.1213L26.4853 46.6066C27.0711 47.1924 28.0208 47.1924 28.6066 46.6066C29.1924 46.0208 29.1924 45.0711 28.6066 44.4853L19.0607 34.9393ZM68 57L18 57L18 60L68 60L68 57ZM19.5 58.5L19.5 36L16.5 36L16.5 58.5L19.5 58.5Z" fill="#EC845C"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="button-container">
+                    <div class="new-button-container">
+                        <button class="new-button looplength-right">4</button>
+                    </div>
+                </div>
+            </div>
+            <div class="eq-left-div button-container">
+                <input type="range" class="eq-left" min="0" max="1" step="any">
+            </div>
+            <div class="eq-right-div button-container">
+                <input type="range" class="eq-right" min="0" max="1" step="any">
+            </div>
+            <div class="vol-left-div button-container">
+                <input type="range" class="vol-left" min="0" max="1" step="any" value="1">
+            </div>
+            <div class="vol-right-div button-container">
+                <input type="range" class="vol-right" min="0" max="1" step="any" value="1">
             </div>
         </div>
     </main>
     <div class="addsong hidden">
         <div class="addsong-container">
-            <div class="addsong-searchbar-container">
-                <input type="search" placeholder="search anything" name="" id="addsong-searchbar" size="15">
+            <div class="searchbar-container">
+                <input type="search" placeholder="search anything" name="" id="searchbar" size="15">
             </div>
-            <div class="addsong-track">
-                <div class="addsong-track-image-container">
+            <div class="track-container">
+                <div class="album-cover-div info-container">
                     <img src="./AlbumCoverPlaceholder.png" id="album-cover" alt="">
                 </div>
-                <div class="addsong-track-info-container">
-                    <label class="add-song-track-artist">artist name</label>
-                    <label class="add-song-track-songname">song title</label>
-                    <hr>
-                    <label class="add-song-track-bpm secondary-text">BPM : --- BPM</label>
-                    <label class="add-song-track-key secondary-text">Key : ---</label>
-                    <hr>
-                    <label class="add-song-track-sp-text italic">Spotify :</label>
-                    <label class="add-song-track-sp-name secondary-text">artist name - song title</label>
+                <div class="soundcloud-info info-container">
+                    <label class="artist-name primary-text">artist name</label>
+                    <label class="song-name secondary-text italic">song title</label>
+                </div>
+                <div class="track-metadata info-container">
+                    <label class="track-bpm secondary-text">BPM : --- BPM</label>
+                    <label class="track-key secondary-text">Key : ---</label>   
+                </div>
+                <div class="spotify-info info-container">
+                    <label class="add-song-track-sp-text primary-text italic">spotify</label>
+                    <label class="add-song-track-sp-name secondary-text">artist name - <br> song title</label>
                     <div class="spotify-checkbox-container">
                         <input type="checkbox" id="spotify-checkbox">
                         <label for="spotify-checkbox">Correct ?</label>
                     </div>
-                    
                 </div>
             </div>
             <div class="addsong-deckchose">
-                <button id="load-left">LEFT</button>
-                <button id="load-right">RIGHT</button>
+                <div class="load-left">
+                    <label class="ld-label-l" for="">L</label>
+                    <div class="new-button-container ld-btn-l">
+                        <button class="new-button hidden" id="load-left">
+                            <svg width="10vmin" height="10vmin" viewBox="0 0 86 86" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="43" cy="43" r="43" fill="#ECE9DF"/>
+                                <line x1="32.5" y1="20.5" x2="53.5" y2="20.5" stroke="#EC845C" stroke-width="3" stroke-linecap="round"/>
+                                <line x1="36" y1="28.5" x2="50" y2="28.5" stroke="#EC845C" stroke-width="3" stroke-linecap="round"/>
+                                <line x1="33.5" y1="36.5" x2="52.5" y2="36.5" stroke="#EC845C" stroke-width="3" stroke-linecap="round"/>
+                                <line x1="38.5" y1="44.5" x2="47.5" y2="44.5" stroke="#EC845C" stroke-width="3" stroke-linecap="round"/>
+                                <line x1="29.5" y1="52.5" x2="56.5" y2="52.5" stroke="#EC845C" stroke-width="3" stroke-linecap="round"/>
+                                <line x1="36.5" y1="60.5" x2="49.5" y2="60.5" stroke="#EC845C" stroke-width="3" stroke-linecap="round"/>
+                                <line x1="39" y1="68.5" x2="47" y2="68.5" stroke="#EC845C" stroke-width="3" stroke-linecap="round"/>
+                            </svg>                                                                              
+                        </button>
+                    </div>
+                </div>
+                <div class="load-right">
+                    <label class="ld-label-r" for="">R</label>
+                    <div class="new-button-container ld-btn-r">
+                        <button class="new-button hidden" id="load-right">
+                            <svg width="10vmin" height="10vmin" viewBox="0 0 86 86" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="43" cy="43" r="43" fill="#ECE9DF"/>
+                                <line x1="32.5" y1="20.5" x2="53.5" y2="20.5" stroke="#EC845C" stroke-width="3" stroke-linecap="round"/>
+                                <line x1="36" y1="28.5" x2="50" y2="28.5" stroke="#EC845C" stroke-width="3" stroke-linecap="round"/>
+                                <line x1="33.5" y1="36.5" x2="52.5" y2="36.5" stroke="#EC845C" stroke-width="3" stroke-linecap="round"/>
+                                <line x1="38.5" y1="44.5" x2="47.5" y2="44.5" stroke="#EC845C" stroke-width="3" stroke-linecap="round"/>
+                                <line x1="29.5" y1="52.5" x2="56.5" y2="52.5" stroke="#EC845C" stroke-width="3" stroke-linecap="round"/>
+                                <line x1="36.5" y1="60.5" x2="49.5" y2="60.5" stroke="#EC845C" stroke-width="3" stroke-linecap="round"/>
+                                <line x1="39" y1="68.5" x2="47" y2="68.5" stroke="#EC845C" stroke-width="3" stroke-linecap="round"/>
+                            </svg>                                        
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
