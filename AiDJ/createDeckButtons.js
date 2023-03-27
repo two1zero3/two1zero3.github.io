@@ -92,6 +92,30 @@ class createDeckButtons {
         }
     }
 
+    buttonStyleOn (button) {
+        //get value of svg color
+        let fillColor;
+        let strokeColor;
+
+        if (button.elt.getElementsByTagName("svg")[0]) {
+            fillColor = button.elt.getElementsByTagName('svg')[0].lastElementChild.getAttribute("fill");
+            strokeColor = button.elt.getElementsByTagName('svg')[0].lastElementChild.getAttribute("stroke");
+        } else {
+            fillColor = "red";
+        }
+        
+        //set it as background --> use fill / stroke depending on shape
+        if(fillColor) {
+            
+            button.style("background-color", fillColor);
+        } else if (strokeColor) {
+            button.style("background-color", strokeColor);
+        }
+    }
+    buttonStyleOff (button) {
+        button.style("background-color", "#F5F5F5");
+    }
+
     playPause(button) {
         if (this.sound) {
 
@@ -99,11 +123,11 @@ class createDeckButtons {
 
                 this.sound.rate(0);
                 this.sound.setVolume(0);
-                button.style("background-color", "#F5F5F5");
+                this.buttons.buttonStyleOff(button); // turn to off color for button
 
             } else if (this.sound.rate() == 0) {
 
-                button.style("background-color", "#EC845C");
+                this.buttons.buttonStyleOn(button); //turn to on color for button
 
                 this.sound.rate(this.bpm / this.initialBpm);
                 this.sound.setVolume(1);
@@ -122,11 +146,11 @@ class createDeckButtons {
         if (this.ticks) {
             if (this.isLooping) {
                 this.sound.removeCue(this.cuePoint);
-                button.style("background-color", "#F5F5F5");
+                this.buttons.buttonStyleOff(button); // turn to off color for button
             }
             if (!this.isLooping) {
 
-                button.style("background-color", "#EC845C");
+                this.buttons.buttonStyleOn(button); //turn to on color for button
 
                 console.log("IS NOT LOOPING");
                 this.loopStartTime = this.sound.currentTime();
@@ -169,10 +193,10 @@ class createDeckButtons {
 
             if (this.reverb.drywet() == 0) {
                 this.reverb.drywet(0.5);
-                button.style("background-color", "#EC845C");
+                this.buttons.buttonStyleOn(button); //turn to on color for button
             } else if (this.reverb.drywet() != 0) {
                 this.reverb.drywet(0);
-                button.style("background-color", "#F5F5F5");
+                this.buttons.buttonStyleOff(button); // turn to off color for button
             }
 
         }
@@ -187,10 +211,10 @@ class createDeckButtons {
 
             if (this.delay.drywet() == 0) {
                 this.delay.drywet(0.5);
-                button.style("background-color", "#EC845C");
+                this.buttons.buttonStyleOn(button); //turn to on color for button
             } else if (this.delay.drywet() != 0) {
                 this.delay.drywet(0);
-                button.style("background-color", "#F5F5F5");
+                this.buttons.buttonStyleOff(button); // turn to off color for button
             }
 
         }
@@ -204,11 +228,11 @@ class createDeckButtons {
             
             if (this.syncOn) {
 
-                button.style("background-color", "#EC845C");
+                this.buttons.buttonStyleOn(button); //turn to on color for button
 
             } else if (!this.syncOn) {
 
-                button.style("background-color", "#F5F5F5");
+                this.buttons.buttonStyleOff(button); // turn to off color for button
 
             }
         }

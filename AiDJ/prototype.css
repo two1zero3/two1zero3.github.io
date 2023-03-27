@@ -15,12 +15,12 @@
     font-family: 'Necto Mono';
 }
 :root {
-    --orange-accent: rgb(255, 102, 0);   /*  rgb(255, 102, 0)  */
+    --orange-accent: rgb(219, 219, 219);   /*  rgb(255, 102, 0)  */
     --button-background: rgb(245, 245, 245);
-    --background-color: #087E8B; /* rgb(168, 186, 188) */
+    --background-color: #b4b4b4; /* rgb(168, 186, 188) */
     --plus-button: #2D3142;
-    --plus-button-hover: #ADA8BE;
-    --label-color: rgb(255, 255, 255);
+    --plus-button-hover: #6c759e;
+    --label-color: rgb(106, 105, 105);
     --main-track-info-text: white;
 }
 html,body {
