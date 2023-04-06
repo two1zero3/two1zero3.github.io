@@ -58,7 +58,7 @@ class urlCodex {
         console.log(spotify.data);
 
         //redirect to next page
-        this.url.pathname = "/sendit.html";
+        this.url.pathname = "hyper/sendit.html";
         window.location.href = this.url;
     }
 
@@ -139,7 +139,7 @@ class urlCodex {
         this.url.searchParams.set("number", select("#number").value() - 1);
 
         //redirect to this.url
-        this.url.pathname = "/sendit.html";
+        this.url.pathname = "hyper/sendit.html";
         window.location.href = this.url;
 
         // console.log(this.url);
