@@ -1,0 +1,152 @@
+/* change font to sans-serif for all text elements */
+* {
+    font-family: "PPNeueMachina-InktrapRegular";
+    font-weight: 100;
+}
+body {
+    background-color: #f5f5f5;
+}
+/* prevent zooming into text when writing on iPhone */
+input, textarea {
+    -webkit-text-size-adjust: none;
+    font-size: 16px;
+}
+input::placeholder {
+    font-family: "PPNeueMachina-InktrapRegular";
+}
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+.form {
+    display: grid;
+    /* make it centered */
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    /* make it responsive */
+    /* height: 85vh; */
+    padding-top:5vh;
+    padding-bottom:5vh;
+    width: 100vw;
+    gap: 1rem;
+}
+
+/* center the div vertically and horizontally with position relative*/
+.title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    padding-bottom: 1em;
+    padding-top: 1em;
+    height: auto; /* change this to the desired height */
+    width: auto; /* change this to the desired width */
+}
+
+#title-text {
+    padding-bottom: 1em;
+    padding-top: 1em;
+}
+/* center placeholder in textarea element */
+textarea::placeholder {
+    text-align: center;
+}
+
+img {
+    width: 10em;
+    border-radius: 1em;
+    height: auto;
+}
+
+.date-time-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    /* center grid */
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+    gap: 0.5em;
+}
+input, button {
+    font-size: 16px;
+}
+
+.spotify-search-container {
+    display: grid;
+    column-gap: 10px;
+    /* center grid */
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+}
+
+.spotify-input {
+    padding-top: 1em;
+    display: flex;
+    gap: 1em;
+    /* center grid */
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+}
+
+.images-container {
+    display: grid;
+    gap: 1em;
+    /* center grid */
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+}
+
+.sendit-container {
+    display: grid;
+    /* center grid */
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    height: 100vh;
+}
+
+/* make text unselectable */
+* {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+/* make the page not scrollable or movable */
+html {
+    /* overflow: hidden; */
+    height: 100%;
+}
+
+/* animate 0.5s fade opacity out */
+.fade-out {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 1s, opacity 1s linear;
+}
+.fade-in {
+    animation: fadeIn 1s;
+}
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+}
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HYPER</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="reset.css">
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.6.0/lib/p5.min.js"></script>
+</head>
+<body class="fade-in">
+    <div id="canvas-container"></div>
+    <div class="form">
+        <h1 id="title-text" class="unselectable">HYPER</h1>
+        <img src="/assets/AlbumCoverPlaceholder.png" alt="cover art" id="cover-art" class="unselectable">
+        <div class="spotify-search-container">
+            <label id="track-name" for="spotify-search" style="color: grey">artist - title</label>
+            <div class="spotify-input">
+                <input id="spotify-search" type="search" size="20" placeholder="Search Spotify">
+                <button id="spotify-preview-button" type="button">preview</button>
+            </div>
+        </div>
+        <textarea name="some text" cols="34" rows="7" placeholder="* write something nice *"></textarea>
+        <!-- date and time chose -->
+        <div class="date-time-container">
+            <label for="color">choose the text color</label>
+            <label for="number">choose the number of people that can add</label>
+            <input type="color" name="color" id="color">
+            <input type="number" name="number" id="number" min="1" max="10">
+        </div>
+        <button class="submit-button">sendit!</button>
+    </div>
+    <script src="scripts/cursorClass.js"></script>
+    <script src="scripts/informationClass.js"></script>
+    <script src="scripts/spotifyInfo.js"></script>
+    <script src="scripts/mainSubmit.js"></script>
+    <script src="scripts/urlCodex.js"></script>
+</body>
+</html>

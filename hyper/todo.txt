@@ -1,0 +1,3 @@
+Make the searchbar and cover art invisible if the number is below 1 - done
+work on "HYPER" title screen - done
+change font
