@@ -4,7 +4,7 @@ let copyButton;
 function setup () {
 
 
-    url.pathname = "/receive.html";
+    url.pathname = "hyper/receive.html";
 
     copyButton = select("#link-to-send");
     copyButton.style("font-size", "2em");
