@@ -21,11 +21,11 @@ function createFramesArray(arr) {
 
         if (i == 0) {
 
-            arr.push(new imageFrame(random(0, width), random(0, height), capture));
+            arr.push(new imageFrame(width/2, height/2, capture));
 
         } else {
 
-            let tempFileName = new imageFrame(random(0, width), random(0, height), createImage(captureWidth, captureHeight));
+            let tempFileName = new imageFrame(width/2 + random(-width/2, width/2), height/2 + random(-height/4, height/4), createImage(captureWidth, captureHeight));
             tempFileName.image.loadPixels();
 
             for (let i = 0; i < tempFileName.image.width; i++) {
@@ -59,7 +59,6 @@ function setup() {
     //CREATE VIDEO CAPTURE
 
     capture = createCapture(VIDEO);
-    capture.size(captureWidth, captureHeight);
     capture.hide();
 
     // MAKE ARRAY WITH 1 CAPTURE and 8 BLACK IMAGES
@@ -75,15 +74,17 @@ function setup() {
 
     button = createButton("");
     button.size(buttonWidth, buttonHeight);
-    button.position(width / 2 - buttonWidth / 2, height / 2 + captureHeight / 2 + 50);
+    // button.position(width / 2 - buttonWidth / 2, height / 2 + captureHeight / 2 - 100);
     button.mousePressed(buttonGotClicked);
+    button.parent("interface-container");
 
     // SPAWN IN COLOR PICKER
 
     colorPicker = createColorPicker('#ed225d');
-    colorPicker.size(captureWidth, 40);
-    colorPicker.position(width / 2 - captureWidth / 2, height / 2 + captureHeight / 2);
+    // colorPicker.size(captureWidth, 40);
+    // colorPicker.position(width / 2 - colorPicker.size().width/2, height / 2 - colorPicker.size().height/2);
     colorPicker.style("background-color: white;");
+    colorPicker.parent("interface-container");
 
     //TEXT OPTIONS
 
@@ -102,7 +103,7 @@ function draw() {
 
     for (let i = 0; i < imageFrames.length; i++) {
 
-        image(imageFrames[i].image, imageFrames[i].x, imageFrames[i].y, captureWidth / 3, captureHeight / 3);
+        image(imageFrames[i].image, imageFrames[i].x, imageFrames[i].y, captureWidth / 4, captureHeight / 4);
         imageFrames[i]._mousePressed();
 
     }
