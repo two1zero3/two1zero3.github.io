@@ -15,12 +15,12 @@
     font-family: 'Necto Mono';
 }
 root {
-     --orange-accent: rgb(45 45 45);
+     --orange-accent: rgb(45, 45, 45);
      --button-background: rgb(245, 245, 245);
      --background-color: #1alala;
-     --plus-button: rgb(236 132 92);
+     --plus-button: rgb(236, 132, 92);
      --plus-button-hover: #1a2557;
-     --label-color: rgb(206 206 206) ;
+     --label-color: rgb(206, 206, 206) ;
      --main-track-info-text: white;
 }
 html,body {
