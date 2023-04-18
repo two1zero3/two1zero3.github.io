@@ -14,14 +14,14 @@
     overflow: hidden;
     font-family: 'Necto Mono';
 }
-:root {
-    --orange-accent: rgb(219, 219, 219);   /*  rgb(255, 102, 0)  */
-    --button-background: rgb(245, 245, 245);
-    --background-color: #b4b4b4; /* rgb(168, 186, 188) */
-    --plus-button: #2D3142;
-    --plus-button-hover: #6c759e;
-    --label-color: rgb(106, 105, 105);
-    --main-track-info-text: white;
+root {
+     --orange-accent: rgb(45 45 45);
+     --button-background: rgb(245, 245, 245);
+     --background-color: #1alala;
+     --plus-button: rgb(236 132 92);
+     --plus-button-hover: #1a2557;
+     --label-color: rgb(206 206 206) ;
+     --main-track-info-text: white;
 }
 html,body {
     width: 100%;
