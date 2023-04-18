@@ -14,13 +14,13 @@
     overflow: hidden;
     font-family: 'Necto Mono';
 }
-root {
+:root {
      --orange-accent: rgb(45, 45, 45);
      --button-background: rgb(245, 245, 245);
-     --background-color: #1alala;
+     --background-color: #1a1a1a;
      --plus-button: rgb(236, 132, 92);
      --plus-button-hover: #1a2557;
-     --label-color: rgb(206, 206, 206) ;
+     --label-color: rgb(206, 206, 206);
      --main-track-info-text: white;
 }
 html,body {
