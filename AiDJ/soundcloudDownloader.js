@@ -34,7 +34,7 @@ class soundData {
 
     //get search results and pick first
 
-    this.client_id = "RMDIzNoU4QIzQsT3xq9J5TdxFFQlJvLY";
+    this.client_id = "vvWDsm284DNe9CDlRlfb3wuseloIl1RS";
     this.searchUrl = new URL(`https://api-v2.soundcloud.com/search?q=${searchValue}&client_id=${this.client_id}&limit=20`);
 
     const response = await fetch(proxyUrl + this.searchUrl);
